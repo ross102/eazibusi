@@ -20,13 +20,14 @@ import {
 	FormText
 } from 'reactstrap';
 import SignUp from './Signup';
-import index from './Home';
+import Home from './Home';
 
 function NavLayout() {
 	return (
 		<Router>
-			<nav className="navbar mb-5 navbar-expand-lg navbar-dark bg-success">
+			<nav style={{ width: '100vw' }} className="navbar navbar-expand-lg navbar-dark bg-success">
 				<Link to="" className="navbar-brand">
+					{/* <img src="../images/Eazi-logo3.png" />  */}
 					EaziBusi
 				</Link>
 				<button
@@ -45,20 +46,25 @@ function NavLayout() {
 					<ul className="navbar-nav mr-auto">
 						<li className="nav-item active">
 							<Link to="" className="nav-link">
-								Home <span className="sr-only">(current)</span>
+								<i className="fa fa-home fa-lg" /> Home <span className="sr-only">(current)</span>
 							</Link>
 						</li>
-						<li className="nav-item">
+						<li className="nav-item active">
 							<Link to="/register" className="nav-link">
-								Sign up
+								<i className="fa fa-registered fa-lg" /> Sign up
 							</Link>
 						</li>
-						<li className="nav-item">
+						<li className="nav-item active">
+							<Link to="/login" className="nav-link">
+								<i className="fa fa-sign-in fa-lg" /> Login
+							</Link>
+						</li>
+						<li className="nav-item active">
 							<Link to="/services" className="nav-link">
 								Servies
 							</Link>
 						</li>
-						<li className="nav-item">
+						<li className="nav-item active">
 							<Link to="/about" className="nav-link">
 								About
 							</Link>
@@ -72,7 +78,7 @@ function NavLayout() {
 					</form>
 				</div>
 			</nav>
-			{/* <Route path="/" exact component={index} /> */}
+			<Route path="/" exact component={Home} />
 			{/* <Route path="/about/" component={About} /> */}
 			<Route path="/register" component={SignUp} />
 		</Router>

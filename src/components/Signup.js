@@ -1,9 +1,11 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, memo, useEffect, Component, useContext } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NewContext from './userProvider';
 import axios from 'axios';
 
-function SignUp() {
+function SignUp(props) {
+	const value = useContext(NewContext);
 	const [ cur, setCur ] = useState({
 		username: '',
 		email: '',
@@ -43,6 +45,7 @@ function SignUp() {
 			setChk({
 				terms: false
 			});
+			props.history.push('/');
 		}
 	};
 
@@ -99,15 +102,17 @@ function SignUp() {
 	};
 
 	const sendData = () => {
+		const data = { ...cur, ...chk };
 		axios
-			.post('http://localhost:5000/user', cur)
+			.post('http://localhost:5000/user', data)
 			.then((res) => {
 				console.log(res);
 				setServer({ err: '' });
+				sessionStorage.setItem('NewUser', JSON.stringify(res.data.name));
 			})
 			.catch((erro) => {
-				if (erro.response.status === 400 || erro.response.statusText === 'bad request') {
-					setServer({ err: erro.response.data.msg });
+				if (erro.response) {
+					setServer({ err: erro.response.data.msg || '' });
 				}
 			});
 		return;
@@ -118,7 +123,9 @@ function SignUp() {
 			<div className="row">
 				<div className="col-md-3" />
 				<div className="col-md-5 mb-5">
-					<h5 style={{ color: '#54d676' }}> Register </h5>
+					<h5 style={{ color: '#54d676' }}>
+						<i className="fa fa-registered fa-lg" /> Register{' '}
+					</h5>
 					<hr />
 					<p className="text-danger"> {serverErr.err ? serverErr.err : ''} </p>
 					<Form onSubmit={handleSubmit} className="mt-2">
@@ -190,7 +197,7 @@ function SignUp() {
 							</FormGroup>
 						</FormGroup>
 						<Button style={{ width: '100%' }} className="btn-success">
-							Register
+							<i className="fa fa-registered fa-lg" /> Register
 						</Button>
 					</Form>
 					<p className="mt-3">

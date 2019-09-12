@@ -19,7 +19,7 @@ const UserSchema = new Schema({
 		trim: true
 	},
 	terms: {
-		type: String,
+		type: Boolean,
 		required: true,
 		trim: true
 	},
