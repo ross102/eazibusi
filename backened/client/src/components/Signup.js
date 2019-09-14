@@ -103,7 +103,7 @@ function SignUp(props) {
 	const sendData = () => {
 		const data = { ...cur, ...chk };
 		axios
-			.post('eazibusi.herokuapp.com/user', data)
+			.post('/user', data)
 			.then((res) => {
 				console.log(res);
 				setServer({ err: '' });

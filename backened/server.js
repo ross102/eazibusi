@@ -55,9 +55,9 @@ server.use(function(req, res, next) {
 	next();
 });
 
-server.get('/', (req, res) => {
-	res.send('hello');
-});
+// server.get('/', (req, res) => {
+// 	res.send('hello');
+// });
 
 // Mount routes
 server.use('/user', userRoute);
