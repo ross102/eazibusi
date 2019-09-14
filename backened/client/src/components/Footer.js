@@ -3,7 +3,7 @@ import { Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 const Footer = () => {
 	return (
-		<div style={{ backgroundColor: '#000080' }} className="container-fluid mb-0 pb-0 mt-5 text-light">
+		<div style={{ backgroundColor: '#B22222' }} className="container-fluid mb-0 pb-0 mt-5 text-light">
 			<div className="row">
 				<div className="col-md-3 col-sm-1" />
 				<div className="col-md-6 col-sm-12 mt-5">

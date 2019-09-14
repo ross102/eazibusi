@@ -26,7 +26,7 @@ function NavLayout() {
 	return (
 		<Router>
 			<nav
-				style={{ width: '100vw', backgroundColor: '#000080' }}
+				style={{ width: '100vw', backgroundColor: '#B22222' }}
 				className="navbar navbar-expand-lg navbar-dark "
 			>
 				<Link to="" className="navbar-brand">
@@ -75,7 +75,7 @@ function NavLayout() {
 					</ul>
 					<form className="form-inline my-2 my-lg-0">
 						<input className="form-control mr-sm-2" type="text" placeholder="Search" />
-						<button className="btn btn-secondary my-2 my-sm-0" type="submit">
+						<button className="btn btn-outline-light my-2 my-sm-0" type="submit">
 							Search
 						</button>
 					</form>
