@@ -6,7 +6,7 @@ const Jumbohouse = (props) => {
 	// const value = useContext(NewContext);
 	// const { checkUser, uncheckUser, loggedIn, user } = value;
 	const firstJumbo = {
-		backgroundImage: 'url(../../images/bus1.jpg)',
+		backgroundImage: 'url(../../images/wallpaper1.jpg)',
 		backgroundPosition: 'center',
 		height: '400px',
 		width: '100vw'
