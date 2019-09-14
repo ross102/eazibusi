@@ -21,8 +21,16 @@ import {
 } from 'reactstrap';
 import SignUp from './Signup';
 import Home from './Home';
+import Login from './Login';
 
 function NavLayout() {
+	const getUser = () => {
+		const person = JSON.parse(sessionStorage.getItem('NewUser'));
+		console.log(person);
+	};
+	useEffect(() => {
+		getUser();
+	}, []);
 	return (
 		<Router>
 			<nav
@@ -84,6 +92,7 @@ function NavLayout() {
 			<Route path="/" exact component={Home} />
 			{/* <Route path="/about/" component={About} /> */}
 			<Route path="/register" component={SignUp} />
+			<Route path="/login" component={Login} />
 		</Router>
 	);
 }

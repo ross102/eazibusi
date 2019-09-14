@@ -65,4 +65,22 @@ router.post('/', (req, res) => {
 	});
 });
 
+router.post('/login', (req, res) => {
+	const { username, password } = req.body;
+	User.authenticate()(username, password)
+		.then((user) => {
+			if (user.user) {
+				res.status(200).json({
+					user: user.user.username,
+					id: user.user.id
+				});
+			} else {
+				res.status(400).json({ user: user.error.message });
+			}
+		})
+		.catch((error) => {
+			return res.status(400).json({ error: error.message });
+		});
+});
+
 module.exports = router;

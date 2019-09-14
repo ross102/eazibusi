@@ -113,7 +113,7 @@ function SignUp(props) {
 					state: {
 						roleID: res.data.id,
 						user: res.data.name,
-						message: 'Welcome to Eazibusi '
+						message: 'welcome to eazibusi '
 					}
 				});
 			})
@@ -135,7 +135,7 @@ function SignUp(props) {
 						Register
 					</h5>
 					<hr />
-					<p className="text-danger"> {serverErr.err ? serverErr.err : ''} </p>
+
 					<Form onSubmit={handleSubmit} className="mt-2">
 						<FormGroup>
 							<Label for="name">Name</Label>
@@ -204,6 +204,7 @@ function SignUp(props) {
 								<p className="text-danger">{termsErr.terms && termsErr.terms}</p>
 							</FormGroup>
 						</FormGroup>
+						<p className="text-danger"> {serverErr.err ? serverErr.err : ''} </p>
 						<Button style={{ width: '100%' }} className="btn-success">
 							<i className="fa fa-registered fa-lg" /> Register
 						</Button>
