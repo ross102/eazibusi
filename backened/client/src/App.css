@@ -1,0 +1,129 @@
+/* .rotated {
+	-webkit-animation-name: text-rotate;
+	-webkit-animation-duration: 4s;
+	animation-name: text-rotate;
+	animation-duration: 6s;
+	animation-iteration-count: 2;
+	animation-delay: 2s;
+}
+
+@-webkit-keyframes text-rotate {
+	0% {
+		transform: rotate(90deg);
+	}
+	25% {
+		transform: rotate(180deg);
+	}
+	50% {
+		transform: rotate(270deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes text-rotate {
+	0% {
+		transform: rotate(90deg);
+	}
+	25% {
+		transform: rotate(180deg);
+	}
+	50% {
+		transform: rotate(270deg);
+	}
+	100% {
+		transform: rotate(360deg);
+
+	}
+} */
+
+body h3 {
+	color: #000080;
+}
+
+.rotated {
+	animation-name: text-rotate;
+	animation-duration: 4s;
+	animation-iteration-count: 2;
+	-webkit-animation-name: text-rotate;
+	-webkit-animation-duration: 2s;
+	-moz-animation-name: text-rotate;
+	-moz-animation-duration: 2s;
+	-ms-animation-name: text-rotate;
+	-ms-animation-duration: 2s;
+}
+.rotated2 {
+	animation-name: text-rotate;
+	animation-duration: 4s;
+	animation-delay: 9s;
+	animation-direction: alternate-reverse;
+	-webkit-animation-name: text-rotate;
+	-webkit-animation-duration: 2s;
+	-moz-animation-name: text-rotate;
+	-moz-animation-duration: 2s;
+	-ms-animation-name: text-rotate;
+	-ms-animation-duration: 2s;
+}
+
+.rotated3 {
+	animation-name: text3-rotate;
+	animation-duration: 5;
+	animation-delay: 15s;
+	animation-iteration-count: 2;
+	-webkit-animation-name: text-rotate;
+	-webkit-animation-duration: 2s;
+	-moz-animation-name: text-rotate;
+	-moz-animation-duration: 2s;
+	-ms-animation-name: text-rotate;
+	-ms-animation-duration: 2s;
+}
+
+/* .rotated {
+	transform: rotate(1080deg);
+	-webkit-transform: rotate(1080deg);
+	-moz-transform: rotate(1080deg);
+	-ms-transform: rotate(1080deg);
+	-o-transform: rotate(1080deg);
+} */
+
+@keyframes text-rotate {
+	0% {
+		transform: translateX(-50%) translateY(50%);
+	}
+	25% {
+		transform: scale(2) rotate(45deg);
+	}
+	50% {
+		transform: scale(2) skew(25deg, 25deg);
+	}
+	75% {
+		font-weight: 800px;
+		transform: rotate(1080deg);
+	}
+	100% {
+		font-weight: 800px;
+		letter-spacing: 0.1em;
+	}
+}
+
+@keyframes text3-rotate {
+	0% {
+		transform: translateX(50%) translateY(-50%);
+	}
+	25% {
+		transform: translateX(-50%) translateY(-50%);
+	}
+	50% {
+		transform: skew(10deg, 10deg);
+	}
+	75% {
+		background-color: 'green';
+		color: 'white';
+	}
+	100% {
+		background-color: 'white';
+		color: 'black';
+		transform: rotate(2160deg);
+	}
+}
