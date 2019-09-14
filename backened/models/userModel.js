@@ -11,12 +11,14 @@ const UserSchema = new Schema({
 	email: {
 		type: String,
 		required: true,
-		trim: true
+		trim: true,
+		minlength: 7
 	},
 	phone: {
 		type: Number,
 		required: true,
-		trim: true
+		trim: true,
+		minlength: 11
 	},
 	terms: {
 		type: Boolean,

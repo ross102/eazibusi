@@ -13,12 +13,30 @@ router.get('/success', isLoggedin, (req, res) => {
 
 // POST register route
 router.post('/', (req, res) => {
+	if (req.body.password.length < 5) {
+		return res.json({ msg: 'password should be more than five characters' });
+	}
 	// Check if email already exists in db
 	User.findOne({ email: req.body.email })
 		.then((foundUser) => {
 			if (foundUser) {
 				return res.status(400).json({
 					msg: 'email already exists'
+				});
+			}
+		})
+		.catch((error) => {
+			res.status(400).json({
+				msg: 'something went wrong',
+				error
+			});
+		});
+	//check if username already exists
+	User.findOne({ username: req.body.username })
+		.then((foundUser) => {
+			if (foundUser) {
+				return res.status(400).json({
+					msg: 'username already exists'
 				});
 			}
 		})
@@ -38,7 +56,10 @@ router.post('/', (req, res) => {
 			});
 		} else {
 			passport.authenticate('local')(req, res, function() {
-				res.json({ name: user.username });
+				res.json({
+					name: user.username,
+					id: user.id
+				});
 			});
 		}
 	});

@@ -4,13 +4,14 @@ const passport = require('passport');
 const User = require('./models/userModel');
 const session = require('express-session');
 const cors = require('cors');
+const path = require('part');
 const port = process.env.PORT || 5000;
 
 // routes
 const userRoute = require('./routes/user');
 
 // connect to the database
-mongoose.connect('mongodb://localhost:27017/Eazibusi102', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Eazibusi102', {
 	useNewUrlParser: true,
 	useCreateIndex: true
 });
@@ -60,6 +61,13 @@ server.get('/', (req, res) => {
 
 // Mount routes
 server.use('/user', userRoute);
+
+if (process.env.NODE_ENV === 'production') {
+	server.use(express.static('client/build'));
+	server.get('*', (req, res) => {
+		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+	});
+}
 
 server.listen(port, (err) => {
 	if (err) throw err;
