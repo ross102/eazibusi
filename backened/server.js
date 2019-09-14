@@ -4,7 +4,7 @@ const passport = require('passport');
 const User = require('./models/userModel');
 const session = require('express-session');
 const cors = require('cors');
-const path = require('part');
+const path = require('path');
 const port = process.env.PORT || 5000;
 
 // routes
