@@ -13,7 +13,7 @@ const Login = (props) => {
 		event.preventDefault();
 		setMes({ ...mes, loading: 'loading... ' });
 		axios
-			.post('http://localhost:5000/user/login', log)
+			.post('/user/login', log)
 			.then((res) => {
 				sessionStorage.setItem('NewUser', JSON.stringify(res.data.user));
 				console.log(res);
