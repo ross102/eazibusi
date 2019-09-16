@@ -13,7 +13,7 @@ const Login = (props) => {
 		event.preventDefault();
 		setMes({ ...mes, loading: 'loading... ' });
 		axios
-			.post('/user/login', log)
+			.post('http://localhost:5000/user/login', log)
 			.then((res) => {
 				sessionStorage.setItem('NewUser', JSON.stringify(res.data.user));
 				console.log(res);
@@ -41,7 +41,16 @@ const Login = (props) => {
 	const handleClick = (event) => {
 		setLog({ ...log, [event.target.name]: event.target.value });
 	};
-
+	const handleFacebook = (event) => {
+		axios
+			.get('/auth/facebook')
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((error) => {
+				console.log(error.response);
+			});
+	};
 	return (
 		<div className="container mt-5 text-center">
 			<p className="text-danger">{mes.message && mes.message}</p>
@@ -60,8 +69,26 @@ const Login = (props) => {
 							<Input type="password" value={log.password} onChange={handleClick} name="password" />
 						</FormGroup>
 						<p className="text-primary">{mes.loading && mes.loading}</p>
-						<Button style={{ backgroundColor: '#000080' }}>Login</Button>
+						<Button className="mt-2" style={{ backgroundColor: '#000080', width: '100%' }}>
+							Login
+						</Button>
 					</Form>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-md-4 " />
+				<div className="col-md-4 ">
+					<button onClick={handleFacebook} style={{ width: '100%' }} className="btn btn-primary">
+						Login with Facebook
+					</button>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-md-4 " />
+				<div className="col-md-4 mt-3 mb-5">
+					<button style={{ width: '100%' }} className="btn btn-danger">
+						Login with Google
+					</button>
 				</div>
 			</div>
 		</div>

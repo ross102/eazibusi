@@ -12,19 +12,17 @@ const UserSchema = new Schema({
 		type: String,
 		required: true,
 		trim: true,
+		unique: true,
 		minlength: 7
-	},
-	phone: {
-		type: Number,
-		required: true,
-		trim: true,
-		minlength: 11
 	},
 	terms: {
 		type: Boolean,
 		required: true,
 		trim: true
 	},
+	facebook: String,
+	provider: String,
+	accessToken: String,
 	date: {
 		type: Date,
 		default: Date.now

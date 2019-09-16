@@ -9,19 +9,16 @@ function SignUp(props) {
 	const [ cur, setCur ] = useState({
 		username: '',
 		email: '',
-		password: '',
-		Cpassword: '',
-		phone: ''
+		password: ''
 	});
 	const [ chk, setChk ] = useState({
 		terms: false
 	});
-
+	const [ hide, setHide ] = useState({ hidden: true });
+	const [ load, setLoad ] = useState({ loading: '' });
 	const [ nameErr, setName ] = useState({ name: '' });
 	const [ emailErr, setEmail ] = useState({ email: '' });
 	const [ pErr, setpErr ] = useState({ password: '' });
-	const [ cErr, setcErr ] = useState({ Cpassword: '' });
-	const [ phoneErr, setPhone ] = useState({ phone: '' });
 	const [ termsErr, setTerms ] = useState({ terms: false });
 	const [ serverErr, setServer ] = useState({ err: '' });
 
@@ -38,9 +35,7 @@ function SignUp(props) {
 			setCur({
 				username: '',
 				email: '',
-				password: '',
-				Cpassword: '',
-				phone: ''
+				password: ''
 			});
 			setChk({
 				terms: false
@@ -58,6 +53,11 @@ function SignUp(props) {
 		setChk({
 			...chk,
 			terms: !chk.terms
+		});
+	};
+	const handleToggle = (event) => {
+		setHide({
+			hidden: !hide.hidden
 		});
 	};
 	const validateInput = () => {
@@ -79,18 +79,6 @@ function SignUp(props) {
 		} else {
 			setpErr({ password: '' });
 		}
-		if (cur.Cpassword !== cur.password) {
-			setcErr({ Cpassword: 'Passwords do not match' });
-			error.err = true;
-		} else {
-			setcErr({ Cpassword: '' });
-		}
-		if (cur.phone.length < 11) {
-			setPhone({ phone: 'Please your number is not correct' });
-			error.err = true;
-		} else {
-			setPhone({ phone: '' });
-		}
 		if (cur.terms === false) {
 			setTerms({ terms: 'terms and conditions apply' });
 			error.err = true;
@@ -102,8 +90,10 @@ function SignUp(props) {
 
 	const sendData = () => {
 		const data = { ...cur, ...chk };
+		setLoad({ loading: 'Loading...' });
+		//send data
 		axios
-			.post('/user', data)
+			.post('5000/user', data)
 			.then((res) => {
 				console.log(res);
 				setServer({ err: '' });
@@ -121,21 +111,28 @@ function SignUp(props) {
 				if (erro.response) {
 					setServer({ err: erro.response.data.msg || '' });
 				}
+				setLoad({ loading: '' });
 			});
 		return;
+	};
+	const handleFacebook = (event) => {
+		axios
+			.get('/auth/facebook')
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((error) => {
+				console.log(error.response);
+			});
 	};
 
 	return (
 		<div className="container mt-5">
 			<div className="row">
 				<div className="col-md-3" />
-				<div className="col-md-5 mb-5">
-					<h5 style={{ color: '#000080' }}>
-						{/* <i className="fa fa-registered fa-lg" /> */}
-						Register
-					</h5>
+				<div className="col-md-5 mb-3">
+					<h5 className="text-success">* Register</h5>
 					<hr />
-
 					<Form onSubmit={handleSubmit} className="mt-2">
 						<FormGroup>
 							<Label for="name">Name</Label>
@@ -161,32 +158,20 @@ function SignUp(props) {
 							/>
 							<p className="text-danger">{emailErr.email && emailErr.email}</p>
 						</FormGroup>
-						<FormGroup>
+						<FormGroup className="allform">
 							<Label for="Password">Password</Label>
 							<Input
-								type="password"
+								type={hide.hidden ? 'password' : 'text'}
 								name="password"
 								onChange={handleChange}
 								required
 								value={cur.password}
+								className="formpass"
 							/>
 							<p className="text-danger">{pErr.password && pErr.password}</p>
-						</FormGroup>
-						<FormGroup>
-							<Label for="Cpassword">Confirm Password</Label>
-							<Input
-								type="password"
-								name="Cpassword"
-								onChange={handleChange}
-								required
-								value={cur.Cpassword}
-							/>
-							<p className="text-danger">{cErr.Cpassword && cErr.Cpassword}</p>
-						</FormGroup>
-						<FormGroup>
-							<Label for="phone"> Phone number </Label>
-							<Input type="number" required name="phone" onChange={handleChange} value={cur.phone} />
-							<p className="text-danger">{phoneErr.phone && phoneErr.phone}</p>
+							<button onClick={handleToggle} className="showpass">
+								<i className=" fa fa-eye fa-lg" aria-hidden="true" />
+							</button>
 						</FormGroup>
 						<FormGroup tag="fieldset">
 							<FormGroup>
@@ -205,6 +190,7 @@ function SignUp(props) {
 							</FormGroup>
 						</FormGroup>
 						<p className="text-danger"> {serverErr.err ? serverErr.err : ''} </p>
+						<p className="text-primary">{load.loading && load.loading}</p>
 						<Button style={{ width: '100%' }} className="btn-success">
 							<i className="fa fa-registered fa-lg" /> Register
 						</Button>
@@ -212,6 +198,22 @@ function SignUp(props) {
 					<p className="mt-3">
 						or login <a href="#">here</a>
 					</p>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-md-3 " />
+				<div className="col-md-5 ">
+					<button onClick={handleFacebook} style={{ width: '100%' }} className="btn btn-primary">
+						Facebook
+					</button>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-md-3 " />
+				<div className="col-md-5 mt-3 mb-5">
+					<button style={{ width: '100%' }} className="btn btn-danger">
+						Google
+					</button>
 				</div>
 			</div>
 		</div>

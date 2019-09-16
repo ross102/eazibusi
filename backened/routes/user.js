@@ -49,10 +49,10 @@ router.post('/', (req, res) => {
 	//get form data
 
 	//register user
-	User.register(new User(req.body), req.body.password, function(err, user) {
+	User.register(new User(req.body), req.body.password, function(err, user, info) {
 		if (err) {
 			res.status(400).json({
-				err: err.message
+				err: info.message
 			});
 		} else {
 			passport.authenticate('local')(req, res, function() {
@@ -64,7 +64,7 @@ router.post('/', (req, res) => {
 		}
 	});
 });
-
+//user login
 router.post('/login', (req, res) => {
 	const { username, password } = req.body;
 	User.authenticate()(username, password)
@@ -81,6 +81,10 @@ router.post('/login', (req, res) => {
 		.catch((error) => {
 			return res.status(400).json({ error: error.message });
 		});
+});
+
+router.get('/fbk', (req, res) => {
+	res.redirect('/auth/facebook');
 });
 
 module.exports = router;

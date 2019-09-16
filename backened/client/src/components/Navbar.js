@@ -24,13 +24,23 @@ import Home from './Home';
 import Login from './Login';
 
 function NavLayout() {
-	const getUser = () => {
-		const person = JSON.parse(sessionStorage.getItem('NewUser'));
-		console.log(person);
+	const [ person, setPerson ] = useState({ newUser: '', loggedIn: false });
+	const getUser = async () => {
+		const per = await JSON.parse(sessionStorage.getItem('NewUser'));
+		if (per) {
+			setPerson({ newUser: per, loggedIn: true });
+		}
+		console.log(per);
 	};
-	useEffect(() => {
-		getUser();
-	}, []);
+
+	useEffect(
+		() => {
+			getUser();
+			getUser();
+		},
+		[ person.newUser ]
+	);
+
 	return (
 		<Router>
 			<nav
@@ -60,24 +70,47 @@ function NavLayout() {
 								<i className="fa fa-home fa-lg" /> Home <span className="sr-only">(current)</span>
 							</Link>
 						</li>
-						<li className="nav-item active">
-							<Link to="/register" className="nav-link">
-								<i className="fa fa-registered fa-lg" /> Sign up
-							</Link>
-						</li>
-						<li className="nav-item active">
-							<Link to="/login" className="nav-link">
-								<i className="fa fa-sign-in fa-lg" /> Login
-							</Link>
-						</li>
+						{!person.loggedIn && (
+							<li className="nav-item active">
+								<Link to="/register" className="nav-link">
+									<i className="fa fa-user fa-lg" /> Sign up
+								</Link>
+							</li>
+						)}
+						{!person.loggedIn && (
+							<li className="nav-item active">
+								<Link to="/login" className="nav-link">
+									<i className="fa fa-sign-in fa-lg" /> Login
+								</Link>
+							</li>
+						)}
+						{person.loggedIn && (
+							<li className="nav-item active">
+								<Link to="#" className="nav-link">
+									Logged in as {person.newUser}
+								</Link>
+							</li>
+						)}
+						{person.loggedIn && (
+							<li className="nav-item active">
+								<Link to="#" className="nav-link">
+									Dashboard
+								</Link>
+							</li>
+						)}
 						<li className="nav-item active">
 							<Link to="/services" className="nav-link">
-								Servies
+								<i className="fa fa-question fa-lg" /> Services
+							</Link>
+						</li>
+						<li className="nav-item active">
+							<Link to="/About" className="nav-link">
+								About
 							</Link>
 						</li>
 						<li className="nav-item active">
 							<Link to="/about" className="nav-link">
-								About
+								<i className="fa fa-shopping-cart fa-lg" /> cart
 							</Link>
 						</li>
 					</ul>
