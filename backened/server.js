@@ -25,19 +25,20 @@ db.on('error', console.error.bind(console, 'mongoDb connection error'));
 // initialize express server
 const server = express();
 
-const whitelist = [ 'http://localhost:3000', 'http://eazibusi.herokuapp.com' ];
+// const whitelist = [ 'http://localhost:3000', 'http://eazibusi.herokuapp.com' ];
 
-//cors
-const corsOptions = {
-	origin: function(origin, callback) {
-		if (whitelist.indexOf(origin) !== -1) {
-			callback(null, true);
-		} else {
-			callback(new Error('Not allowed by CORS'));
-		}
-	}
-};
-server.use(cors(corsOptions));
+// //cors
+// const corsOptions = {
+// 	origin: function(origin, callback) {
+// 		if (whitelist.indexOf(origin) !== -1) {
+// 			callback(null, true);
+// 		} else {
+// 			callback(new Error('Not allowed by CORS'));
+// 		}
+// 	}
+// };
+server.use(cors());
+server.use('*', cors());
 
 // express body-parser
 server.use(express.json());
