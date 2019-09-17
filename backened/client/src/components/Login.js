@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import NewContext from './userProvider';
-import Jumbohouse from './Jumbohouse';
 import FirstSection from './firstSection';
 import axios from 'axios';
 
