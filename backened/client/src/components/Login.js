@@ -11,7 +11,7 @@ const Login = (props) => {
 		event.preventDefault();
 		setMes({ ...mes, loading: 'loading... ' });
 		axios
-			.post('/user/login', log)
+			.post('http://eazibusi.herokuapp.com/user/login', log)
 			.then((res) => {
 				sessionStorage.setItem('NewUser', JSON.stringify(res.data.user));
 				console.log(res);
@@ -40,10 +40,10 @@ const Login = (props) => {
 		setLog({ ...log, [event.target.name]: event.target.value });
 	};
 	const handleFacebook = (event) => {
-		window.location.href = '/auth/facebook';
+		window.location.href = 'http://eazibusi.herokuapp.com/auth/facebook';
 	};
 	const handleGoogle = (event) => {
-		window.location.href = '/auth/google';
+		window.location.href = 'http://eazibusi.herokuapp.com/auth/google';
 	};
 	return (
 		<div className="container mt-5 text-center">

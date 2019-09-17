@@ -93,7 +93,7 @@ function SignUp(props) {
 		setLoad({ loading: 'Loading...' });
 		//send data
 		axios
-			.post('/user', data)
+			.post('http://eazibusi.herokuapp.com/user', data)
 			.then((res) => {
 				console.log(res);
 				setServer({ err: '' });
@@ -116,10 +116,10 @@ function SignUp(props) {
 		return;
 	};
 	const handleFacebook = (event) => {
-		window.location.href = '/auth/facebook';
+		window.location.href = 'http://eazibusi.herokuapp.com/auth/facebook';
 	};
 	const handleGoogle = (event) => {
-		window.location.href = '/auth/google';
+		window.location.href = 'http://eazibusi.herokuapp.com/auth/google';
 	};
 	return (
 		<div className="container mt-5">

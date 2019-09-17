@@ -19,7 +19,6 @@
 		"eject": "react-scripts eject"
 	},
 	"homepage": ".",
-	"proxy": "http://eazibusi.herokuapp.com",
 	"eslintConfig": {
 		"extends": "react-app"
 	},
