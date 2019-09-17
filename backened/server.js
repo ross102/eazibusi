@@ -83,20 +83,22 @@ passport.use(
 		{
 			clientID: process.env.FACEBOOK_APP_ID,
 			clientSecret: process.env.FACEBOOK_APP_SECRET,
-			callbackURL: 'http://eazibusi.herokuapp.com/auth/facebook/callback'
+			callbackURL: 'http://localhost:5000/auth/facebook/callback',
+			profileFields: [ 'id', 'email', 'displayName', 'picture.type(large)' ]
 		},
 		function(accessToken, refreshToken, profile, done) {
 			console.log(accessToken, profile);
-			User.findOne({ 'facebook.id': profile.id }, function(err, user) {
+			User.findOne({ facebook: profile.id }, function(err, user) {
 				if (err) {
 					return done(err);
 				}
 				if (!user) {
-					user = new User({
-						email: profile.emails[0].value,
-						username: profile.username,
+					const user = new User({
+						email: profile.emails[0].value ? profile.emails[0].value : '',
+						username: profile.displayName,
 						provider: 'facebook',
-						facebook: profile._json
+						facebook: profile.id,
+						avater: profile.photos ? profile.photos[0].value : ''
 					});
 					user.save(function(err) {
 						if (err) console.log(err);
@@ -119,12 +121,24 @@ passport.use(
 server.use('/user', userRoute);
 
 // facebook login
-server.get('/auth/facebook', passport.authenticate('facebook'));
-server.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
-	if (req.user) {
-		res.status(400).json({ user: req.user.username, id: req.user });
+server.get(
+	'/auth/facebook',
+	passport.authenticate('facebook', {
+		authType: 'reauthenticate',
+		scope: [ 'email' ]
+	})
+);
+server.get(
+	'/auth/facebook/callback',
+	cors(),
+	passport.authenticate('facebook', {
+		failureRedirect: '/login',
+		scope: [ 'email' ]
+	}),
+	(req, res) => {
+		res.send('auth successful');
 	}
-});
+);
 
 if (process.env.NODE_ENV === 'production') {
 	server.use(express.static('client/build'));

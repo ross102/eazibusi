@@ -42,14 +42,7 @@ const Login = (props) => {
 		setLog({ ...log, [event.target.name]: event.target.value });
 	};
 	const handleFacebook = (event) => {
-		axios
-			.get('/auth/facebook')
-			.then((res) => {
-				console.log(res);
-			})
-			.catch((error) => {
-				console.log(error.response);
-			});
+		window.location.href = 'http://localhost:5000/auth/facebook';
 	};
 	return (
 		<div className="container mt-5 text-center">
