@@ -78,6 +78,14 @@ server.use(function(req, res, next) {
 
 	next();
 });
+
+if (process.env.NODE_ENV === 'production') {
+	server.use(express.static('client/build'));
+	server.get('*', (req, res) => {
+		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+	});
+}
+
 // configure facebook passport
 passport.use(
 	new FacebookStrategy(
@@ -187,13 +195,6 @@ server.get(
 server.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) {
 	res.redirect('/');
 });
-
-if (process.env.NODE_ENV === 'production') {
-	server.use(express.static('client/build'));
-	server.get('*', (req, res) => {
-		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-	});
-}
 
 server.listen(port, (err) => {
 	if (err) throw err;
