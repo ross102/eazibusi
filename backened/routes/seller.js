@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
-const User = require('../models/userModel');
 const Seller = require('../models/sellerModel');
 const passport = require('passport');
 const { isLoggedin } = require('../middleware');
@@ -13,12 +12,12 @@ router.get('/success', isLoggedin, (req, res) => {
 });
 
 // POST register route
-router.post('/', (req, res) => {
+router.post('/seller', (req, res) => {
 	if (req.body.password.length < 5) {
 		return res.json({ msg: 'password should be more than five characters' });
 	}
 	// Check if email already exists in db
-	User.findOne({ email: req.body.email })
+	Seller.findOne({ email: req.body.email })
 		.then((foundUser) => {
 			if (foundUser) {
 				return res.status(400).json({
@@ -33,7 +32,7 @@ router.post('/', (req, res) => {
 			});
 		});
 	//check if username already exists
-	User.findOne({ username: req.body.username })
+	Seller.findOne({ username: req.body.username })
 		.then((foundUser) => {
 			if (foundUser) {
 				return res.status(400).json({
@@ -50,7 +49,7 @@ router.post('/', (req, res) => {
 	//get form data
 
 	//register user
-	User.register(new User(req.body), req.body.password, function(err, user, info) {
+	Seller.register(new User(req.body), req.body.password, function(err, user, info) {
 		if (err) {
 			res.status(400).json({
 				err: info.message
@@ -66,38 +65,22 @@ router.post('/', (req, res) => {
 	});
 });
 //user login
-router.post('/login', (req, res) => {
-	const { username, password } = req.body;
-	User.authenticate()(username, password)
-		.then((user) => {
-			if (user.user) {
-				res.status(200).json({
-					user: user.user.username,
-					id: user.user.id
-				});
-			} else {
-				// res.status(400).json({ user: user.error.message });
-				Seller.authenticate()(username, password)
-					.then((user) => {
-						if (user.user) {
-							res.status(200).json({
-								user: user.user.username,
-								id: user.user.id
-							});
-						}
-					})
-					.catch((err) => {
-						return res.status(400).json({ error: err.message });
-					});
-			}
-		})
-		.catch((error) => {
-			return res.status(400).json({ error: error.message });
-		});
-});
-
-router.get('/fbk', (req, res) => {
-	res.redirect('/auth/facebook');
-});
+// router.post('/login', (req, res) => {
+//     const { username, password } = req.body;
+//     Seller.authenticate()(username, password)
+//         .then((user) => {
+//             if (user.user) {
+//                 res.status(200).json({
+//                     user: user.user.username,
+//                     id: user.user.id
+//                 });
+//             } else {
+//                 res.status(400).json({ user: user.error.message });
+//             }
+//         })
+//         .catch((error) => {
+//             return res.status(400).json({ error: error.message });
+//         });
+// });
 
 module.exports = router;
