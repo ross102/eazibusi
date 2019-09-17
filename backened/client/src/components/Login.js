@@ -13,7 +13,7 @@ const Login = (props) => {
 		event.preventDefault();
 		setMes({ ...mes, loading: 'loading... ' });
 		axios
-			.post('http://localhost:5000/user/login', log)
+			.post('/user/login', log)
 			.then((res) => {
 				sessionStorage.setItem('NewUser', JSON.stringify(res.data.user));
 				console.log(res);
@@ -42,7 +42,10 @@ const Login = (props) => {
 		setLog({ ...log, [event.target.name]: event.target.value });
 	};
 	const handleFacebook = (event) => {
-		window.location.href = 'http://localhost:5000/auth/facebook';
+		window.location.href = '/auth/facebook';
+	};
+	const handleGoogle = (event) => {
+		window.location.href = '/auth/google';
 	};
 	return (
 		<div className="container mt-5 text-center">
@@ -79,7 +82,7 @@ const Login = (props) => {
 			<div className="row">
 				<div className="col-md-4 " />
 				<div className="col-md-4 mt-3 mb-5">
-					<button style={{ width: '100%' }} className="btn btn-danger">
+					<button onClick={handleGoogle} style={{ width: '100%' }} className="btn btn-danger">
 						Login with Google
 					</button>
 				</div>

@@ -93,7 +93,7 @@ function SignUp(props) {
 		setLoad({ loading: 'Loading...' });
 		//send data
 		axios
-			.post('5000/user', data)
+			.post('/5000/user', data)
 			.then((res) => {
 				console.log(res);
 				setServer({ err: '' });
@@ -116,16 +116,11 @@ function SignUp(props) {
 		return;
 	};
 	const handleFacebook = (event) => {
-		axios
-			.get('/auth/facebook')
-			.then((res) => {
-				console.log(res);
-			})
-			.catch((error) => {
-				console.log(error.response);
-			});
+		window.location.href = '/auth/facebook';
 	};
-
+	const handleGoogle = (event) => {
+		window.location.href = '/auth/google';
+	};
 	return (
 		<div className="container mt-5">
 			<div className="row">
@@ -211,7 +206,7 @@ function SignUp(props) {
 			<div className="row">
 				<div className="col-md-3 " />
 				<div className="col-md-5 mt-3 mb-5">
-					<button style={{ width: '100%' }} className="btn btn-danger">
+					<button onClick={handleGoogle} style={{ width: '100%' }} className="btn btn-danger">
 						Google
 					</button>
 				</div>

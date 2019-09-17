@@ -19,10 +19,22 @@ const UserSchema = new Schema({
 		type: Boolean,
 		trim: true
 	},
-	facebook: String,
-	provider: String,
-	accessToken: String,
-	avater: String,
+	facebook: {
+		facebookId: String,
+		email: String,
+		username: String,
+		provider: String,
+		accessToken: String,
+		avater: String
+	},
+	google: {
+		googleId: String,
+		username: String,
+		email: String,
+		provider: String,
+		accessToken: String,
+		avater: String
+	},
 	date: {
 		type: Date,
 		default: Date.now
