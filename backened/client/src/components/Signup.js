@@ -93,7 +93,7 @@ function SignUp(props) {
 		setLoad({ loading: 'Loading...' });
 		//send data
 		axios
-			.post('/5000/user', data)
+			.post('/user', data)
 			.then((res) => {
 				console.log(res);
 				setServer({ err: '' });
