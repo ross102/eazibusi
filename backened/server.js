@@ -120,7 +120,7 @@ passport.use(
 		{
 			clientID: process.env.GOOGLE_CLIENT_ID,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-			callbackURL: 'http://www.eazibusi.herokuapp.com/auth/google/callback'
+			callbackURL: 'http://eazibusi.herokuapp.com/auth/google/callback'
 		},
 		function(accessToken, refreshToken, profile, done) {
 			console.log(accessToken, profile);
