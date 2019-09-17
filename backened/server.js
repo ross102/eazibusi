@@ -79,10 +79,11 @@ server.use(function(req, res, next) {
 	next();
 });
 
+const root = require('path').join(__dirname, 'client', 'build');
 if (process.env.NODE_ENV === 'production') {
-	server.use('/static', express.static(path.join(__dirname, 'client/build')));
+	server.use(express.static(root));
 	server.get('*', (req, res) => {
-		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+		res.sendFile('index.html', { root });
 	});
 }
 
