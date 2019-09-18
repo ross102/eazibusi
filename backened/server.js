@@ -92,7 +92,7 @@ passport.use(
 		{
 			clientID: process.env.FACEBOOK_APP_ID,
 			clientSecret: process.env.FACEBOOK_APP_SECRET,
-			callbackURL: 'http://eazibusi.herokuapp.com/auth/facebook/callback',
+			callbackURL: '/auth/facebook/callback',
 			profileFields: [ 'id', 'email', 'displayName', 'picture.type(large)' ]
 		},
 		function(accessToken, refreshToken, profile, done) {
@@ -128,8 +128,7 @@ passport.use(
 		{
 			clientID: process.env.GOOGLE_CLIENT_ID,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-			callbackURL: 'http://eazibusi.herokuapp.com/auth/google/callback',
-			proxy: true
+			callbackURL: '/auth/google/callback'
 		},
 		function(accessToken, refreshToken, profile, done) {
 			console.log(accessToken, profile);
