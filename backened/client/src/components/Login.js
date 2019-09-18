@@ -40,10 +40,10 @@ const Login = (props) => {
 		setLog({ ...log, [event.target.name]: event.target.value });
 	};
 	const handleFacebook = (event) => {
-		window.location.href = 'http://eazibusi.herokuapp.com/auth/facebook';
+		window.location.href = 'https://eazibusi.herokuapp.com/auth/facebook';
 	};
 	const handleGoogle = (event) => {
-		window.location.href = 'http://eazibusi.herokuapp.com/auth/google';
+		window.location.href = 'https://eazibusi.herokuapp.com/auth/google';
 	};
 	return (
 		<div className="container mt-5 text-center">
