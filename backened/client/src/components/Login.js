@@ -40,10 +40,28 @@ const Login = (props) => {
 		setLog({ ...log, [event.target.name]: event.target.value });
 	};
 	const handleFacebook = (event) => {
-		window.location.href = '/auth/facebook';
+		axios
+			.get('/auth/google')
+			.then((res) => {
+				console.log(res);
+				return;
+			})
+			.catch((error) => {
+				console.log(error);
+				return;
+			});
 	};
 	const handleGoogle = (event) => {
-		window.location.href = '/auth/google';
+		axios
+			.get('/auth/google')
+			.then((res) => {
+				console.log(res);
+				return;
+			})
+			.catch((error) => {
+				console.log(error);
+				return;
+			});
 	};
 	return (
 		<div className="container mt-5 text-center">
