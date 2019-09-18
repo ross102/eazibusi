@@ -53,7 +53,7 @@ router.post('/', (req, res) => {
 	User.register(new User(req.body), req.body.password, function(err, user, info) {
 		if (err) {
 			res.status(400).json({
-				err: info.message
+				err: err.message
 			});
 		} else {
 			passport.authenticate('local')(req, res, function() {
@@ -76,19 +76,7 @@ router.post('/login', (req, res) => {
 					id: user.user.id
 				});
 			} else {
-				// res.status(400).json({ user: user.error.message });
-				Seller.authenticate()(username, password)
-					.then((user) => {
-						if (user.user) {
-							res.status(200).json({
-								user: user.user.username,
-								id: user.user.id
-							});
-						}
-					})
-					.catch((err) => {
-						return res.status(400).json({ error: err.message });
-					});
+				res.status(400).json({ user: user.error.message });
 			}
 		})
 		.catch((error) => {

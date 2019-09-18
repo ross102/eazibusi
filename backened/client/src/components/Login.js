@@ -11,7 +11,7 @@ const Login = (props) => {
 		event.preventDefault();
 		setMes({ ...mes, loading: 'loading... ' });
 		axios
-			.post('http://eazibusi.herokuapp.com/user/login', log)
+			.post('/user/login', log)
 			.then((res) => {
 				sessionStorage.setItem('NewUser', JSON.stringify(res.data.user));
 				console.log(res);
@@ -27,10 +27,10 @@ const Login = (props) => {
 			})
 			.catch((error) => {
 				if (error && error.status === 400) {
-					setMes({ ...mes, message: error.response.data.user, loading: '' });
+					setMes({ ...mes, message: 'passord or username incorrect', loading: '' });
 				}
 				if (error.response) {
-					setMes({ message: '', loading: '' });
+					setMes({ message: 'passord or username incorrect', loading: '' });
 				}
 				return;
 			});
