@@ -41,7 +41,7 @@ const Login = (props) => {
 	};
 	const handleFacebook = (event) => {
 		axios
-			.get('/auth/google')
+			.get('/auth/facebook')
 			.then((res) => {
 				console.log(res);
 				return;
