@@ -176,7 +176,7 @@ server.get(
 	'/auth/facebook/callback',
 	cors(),
 	passport.authenticate('facebook', {
-		failureRedirect: '/login',
+		failureRedirect: '/user/login',
 		scope: [ 'email' ]
 	}),
 	(req, res) => {
@@ -187,12 +187,14 @@ server.get(
 server.get(
 	'/auth/google',
 	passport.authenticate('google', {
-		authType: 'reauthenticate',
-		scope: [ 'openid', 'email', 'profile' ]
+		scope: [ 'https://www.googleapis.com/auth/plus.login' ]
 	})
 );
 
-server.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) {
+server.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/user/login' }), function(
+	req,
+	res
+) {
 	res.redirect('/');
 });
 
