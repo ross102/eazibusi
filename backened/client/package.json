@@ -18,6 +18,7 @@
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},
+	"homepage": "https://eazibusi.herokuapp.com/client",
 	"eslintConfig": {
 		"extends": "react-app"
 	},
