@@ -44,20 +44,27 @@ server.use('*', cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
-// Configure Passport and Sessions
-// server.use(
-// 	session({
-// 		secret: 'lions are friendly',
-// 		resave: false,
-// 		saveUninitialized: true
-// 	})
-// );
+//Configure Passport and Sessions
+server.use(
+	session({
+		secret: 'lions are friendly',
+		resave: false,
+		saveUninitialized: true
+	})
+);
 //passport middleware
 server.use(passport.initialize());
 //passport config
 require('./middleware/passportJson')(passport);
 require('./middleware/facebook')(passport);
 require('./middleware/google')(passport);
+
+server.use(passport.initialize());
+server.use(passport.session());
+
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 server.use(function(req, res, next) {
 	// Website you wish to allow to connect
