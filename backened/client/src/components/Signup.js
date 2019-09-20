@@ -111,10 +111,10 @@ function SignUp(props) {
 		return;
 	};
 	const handleFacebook = (event) => {
-		window.location.href = 'https://eazibusi.herokuapp.com/auth/facebook';
+		window.location.href = '/auth/facebook';
 	};
 	const handleGoogle = (event) => {
-		window.location.href = 'https://eazibusi.herokuapp.com/auth/google';
+		window.location.href = '/auth/google';
 	};
 	return (
 		<div className="container mt-5">

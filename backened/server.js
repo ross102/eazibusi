@@ -78,10 +78,10 @@ server.use(function(req, res, next) {
 });
 
 if (process.env.NODE_ENV === 'production') {
-	server.get('*', function(req, res, next) {
-		if (req.headers['x-forwarded-proto'] != 'https') res.redirect('https://eazibusi.herokuapp.com' + req.url);
-		else next(); /* Continue to other routes if we're not redirecting */
-	});
+	// server.get('*', function(req, res, next) {
+	// 	if (req.headers['x-forwarded-proto'] != 'https') res.redirect('https://eazibusi.herokuapp.com' + req.url);
+	// 	else next(); /* Continue to other routes if we're not redirecting */
+	// });
 	server.use('/', express.static(path.join(__dirname, 'client/build')));
 	server.get('*', (req, res) => {
 		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
