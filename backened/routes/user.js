@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const cors = require('cors');
 const User = require('../models/userModel');
 const Seller = require('../models/sellerModel');
-const passport = require('passport');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { isLoggedin } = require('../middleware');
 
 // GET register route
@@ -13,9 +13,9 @@ router.get('/success', isLoggedin, (req, res) => {
 });
 
 // POST register route
-router.post('/', (req, res) => {
+router.post('/register', (req, res) => {
 	if (req.body.password.length < 5) {
-		return res.json({ msg: 'password should be more than five characters' });
+		return res.json({ msg: 'invalid format' });
 	}
 	// Check if email already exists in db
 	User.findOne({ email: req.body.email })
@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
 			}
 		})
 		.catch((error) => {
-			res.status(400).json({
+			return res.status(400).json({
 				msg: 'something went wrong',
 				error
 			});
@@ -42,45 +42,76 @@ router.post('/', (req, res) => {
 			}
 		})
 		.catch((error) => {
-			res.status(400).json({
+			return res.status(400).json({
 				msg: 'something went wrong',
 				error
 			});
 		});
-	//get form data
-
 	//register user
-	User.register(new User(req.body), req.body.password, function(err, user, info) {
-		if (err) {
-			res.status(400).json({
-				err: err.message
-			});
-		} else {
-			passport.authenticate('local')(req, res, function() {
-				res.json({
-					name: user.username,
-					id: user.id
+	const newUser = new User({
+		username: req.body.username,
+		email: req.body.email,
+		password: req.body.password,
+		terms: req.body.terms
+	});
+	// hash password
+	bcrypt.genSalt(10, (err, salt) => {
+		bcrypt.hash(newUser.password, salt, (err, hash) => {
+			if (err) console.log(err);
+			newUser.password = hash;
+			newUser
+				.save()
+				.then((user) => {
+					res.json(user);
+				})
+				.catch((err) => {
+					console.log(err);
 				});
-			});
-		}
+		});
 	});
 });
 //user login
 router.post('/login', (req, res) => {
-	const { username, password } = req.body;
-	User.authenticate()(username, password)
+	const { email, password } = req.body;
+	if (!email || !password) {
+		return res.status(400).json({ err: 'please input correct details' });
+	}
+	User.findOne({ email })
 		.then((user) => {
-			if (user.user) {
-				res.status(200).json({
-					user: user.user.username,
-					id: user.user.id
-				});
-			} else {
-				res.status(400).json({ user: user.error.message });
+			if (!user) {
+				return res.status(400).json({ err: 'email not found' });
 			}
+			bcrypt.compare(password, user.password).then((isMatch) => {
+				if (isMatch) {
+					// create Jwt payload
+					const payload = {
+						id: user.id,
+						username: user.username
+					};
+					// sign token
+					jwt.sign(
+						payload,
+						process.env.SECRETORKEY,
+						{
+							expiresIn: 31556926
+						},
+						(err, token) => {
+							return res.json({
+								success: true,
+								token: {
+									token: 'Bearer ' + token,
+									user: user.username
+								}
+							});
+						}
+					);
+				} else {
+					return res.status(400).json({ err: 'password incorect' });
+				}
+			});
 		})
-		.catch((error) => {
-			return res.status(400).json({ error: error.message });
+		.catch((err) => {
+			console.log(err);
 		});
 });
 

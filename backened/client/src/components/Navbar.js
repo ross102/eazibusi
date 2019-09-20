@@ -1,45 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import {
-	Collapse,
-	Navbar,
-	NavbarToggler,
-	NavbarBrand,
-	Nav,
-	NavItem,
-	NavLink,
-	UncontrolledDropdown,
-	DropdownToggle,
-	DropdownMenu,
-	DropdownItem,
-	Form,
-	FormGroup,
-	Label,
-	Input,
-	FormText
-} from 'reactstrap';
 import SignUp from './Signup';
 import Home from './Home';
 import Login from './Login';
+import { AuthContext } from '../context/AuthContext';
 
 function NavLayout() {
-	const [ person, setPerson ] = useState({ newUser: '', loggedIn: false });
-	const getUser = async () => {
-		const per = await JSON.parse(sessionStorage.getItem('NewUser'));
-		if (per) {
-			setPerson({ newUser: per, loggedIn: true });
-		}
-		console.log(per);
-	};
+	const { signedIn } = useContext(AuthContext);
+	// const [ person, setPerson ] = useState({ newUser: '', loggedIn: false });
+	// let mount = false;
+	// const setUser = () => {
+	// 	if (signedIn !== null) {
+	// 		setPerson({
+	// 			newUser: signedIn,
+	// 			loggedIn: true
+	// 		});
+	// 	}
+	// 	return;
+	// };
 
-	useEffect(
-		() => {
-			getUser();
-			getUser();
-		},
-		[ person.newUser ]
-	);
+	// useEffect(() => {
+	// 	mount = true;
+	// 	if (mount) {
+	// 		setUser();
+	// 	}
+	// 	return () => {
+	// 		mount = false;
+	// 	};
+	// }, []);
 
 	return (
 		<Router>
@@ -69,28 +58,28 @@ function NavLayout() {
 								<i className="fa fa-home fa-lg" /> Home <span className="sr-only">(current)</span>
 							</Link>
 						</li>
-						{!person.loggedIn && (
+						{signedIn === null && (
 							<li className="nav-item active">
 								<Link to="/register" className="nav-link">
 									<i className="fa fa-user fa-lg" /> Sign up
 								</Link>
 							</li>
 						)}
-						{!person.loggedIn && (
+						{signedIn === null && (
 							<li className="nav-item active">
 								<Link to="/login" className="nav-link">
 									<i className="fa fa-sign-in fa-lg" /> Login
 								</Link>
 							</li>
 						)}
-						{person.loggedIn && (
+						{signedIn !== null && (
 							<li className="nav-item active">
 								<Link to="#" className="nav-link">
-									Logged in as {person.newUser}
+									Logged in as {signedIn.user}
 								</Link>
 							</li>
 						)}
-						{person.loggedIn && (
+						{signedIn !== null && (
 							<li className="nav-item active">
 								<Link to="#" className="nav-link">
 									Dashboard

@@ -97,15 +97,10 @@ function SignUp(props) {
 			.then((res) => {
 				console.log(res);
 				setServer({ err: '' });
-				sessionStorage.setItem('NewUser', JSON.stringify(res.data.name));
-				props.history.push({
-					pathname: '/',
-					state: {
-						roleID: res.data.id,
-						user: res.data.name,
-						message: 'welcome to eazibusi '
-					}
-				});
+				if (res.data.length) {
+					sessionStorage.setItem('NewUser', JSON.stringify(res.data.user));
+					props.history.push('/user/login');
+				}
 			})
 			.catch((erro) => {
 				if (erro.response) {

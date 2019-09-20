@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import NewContext from './userProvider';
+import { AuthContext } from '../context/AuthContext';
 import Jumbohouse from './Jumbohouse';
 import FirstSection from './firstSection';
 import axios from 'axios';
@@ -7,31 +7,31 @@ import SecondSection from './SecondSection';
 import ThirdSection from './ThirdSection';
 
 const Home = (props) => {
+	const { signedIn } = useContext(AuthContext);
+	console.log(signedIn);
 	const [ message, setMessage ] = useState({ message: '' });
-	const [ newUser, setUser ] = useState({ user: '' });
 
 	function check() {
-		if (props.location.state) {
-			setMessage({ message: props.location.state.message });
-			setUser({ user: props.location.state.user });
-			// msg timeout
-			setTimeout(function() {
-				setMessage({ message: '' });
-			}, 6000);
-		}
+		setMessage({ message: 'welcome to eazibusi' });
+		// msg timeout
+		setTimeout(function() {
+			setMessage({ message: '' });
+		}, 6000);
 	}
 
 	useEffect(
 		() => {
-			check();
+			if (signedIn !== null) {
+				check();
+			}
 		},
-		[ newUser.user ]
+		[ signedIn ]
 	);
 
 	return (
 		<div>
 			<h4 id="msg" style={{ marginBottom: '0', color: 'green' }}>
-				{message.message && message.message + newUser.user}
+				{message.message && message.message}
 			</h4>
 			<Jumbohouse />
 			<FirstSection />

@@ -2,9 +2,8 @@ process.env.NODE_ENV !== 'production' && require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
-const FacebookStrategy = require('passport-facebook').Strategy;
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('./models/userModel');
+const Seller = require('./models/sellerModel');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
@@ -46,20 +45,19 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
 // Configure Passport and Sessions
-server.use(
-	session({
-		secret: 'lions are friendly',
-		resave: false,
-		saveUninitialized: true
-	})
-);
-
+// server.use(
+// 	session({
+// 		secret: 'lions are friendly',
+// 		resave: false,
+// 		saveUninitialized: true
+// 	})
+// );
+//passport middleware
 server.use(passport.initialize());
-server.use(passport.session());
-
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+//passport config
+require('./middleware/passportJson')(passport);
+require('./middleware/facebook')(passport);
+require('./middleware/google')(passport);
 
 server.use(function(req, res, next) {
 	// Website you wish to allow to connect
@@ -89,77 +87,6 @@ if (process.env.NODE_ENV === 'production') {
 		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 	});
 }
-
-// configure facebook passport
-passport.use(
-	new FacebookStrategy(
-		{
-			clientID: process.env.FACEBOOK_APP_ID,
-			clientSecret: process.env.FACEBOOK_APP_SECRET,
-			callbackURL: 'https://eazibusi.herokuapp.com/auth/facebook/callback',
-			profileFields: [ 'id', 'email', 'displayName', 'picture.type(large)' ]
-		},
-		function(accessToken, refreshToken, profile, done) {
-			console.log(accessToken, profile);
-			User.findOne({ 'facebook.facebookId': profile.id }, function(err, user) {
-				if (err) {
-					return done(err);
-				}
-				if (!user) {
-					const user = new User();
-					(user.facebook.email = profile.emails[0].value ? profile.emails[0].value : ''),
-						(user.facebook.username = profile.displayName),
-						(user.facebook.accessToken = accessToken),
-						(user.facebook.provider = 'facebook'),
-						(user.facebook.facebookId = profile.id),
-						(user.facebook.avater = profile.photos ? profile.photos[0].value : '');
-
-					user.save(function(err) {
-						if (err) console.log(err);
-						return done(err, user);
-					});
-				} else {
-					//found user. Return
-					return done(null, user);
-				}
-			});
-		}
-	)
-);
-// configure google passport
-passport.use(
-	new GoogleStrategy(
-		{
-			clientID: process.env.GOOGLE_CLIENT_ID,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-			callbackURL: 'https://eazibusi.herokuapp.com/auth/google/callback'
-		},
-		function(accessToken, refreshToken, profile, done) {
-			console.log(accessToken, profile);
-			User.findOne({ 'google.googleId': profile.id }, function(err, user) {
-				if (err) {
-					return done(err);
-				}
-				if (!user) {
-					const user = new User();
-					(user.google.email = profile.emails[0].value ? profile.emails[0].value : ''),
-						(user.google.username = profile.displayName),
-						(user.google.accessToken = accessToken),
-						(user.google.provider = 'google'),
-						(user.google.googleId = profile.id),
-						(user.google.avater = profile._json.picture ? profile._json.picture : '');
-					user.save(function(err) {
-						if (err) console.log(err);
-						return done(err, user);
-					});
-				} else {
-					//found user. Return
-					return done(null, user);
-				}
-			});
-		}
-	)
-);
 
 // server.get('/', (req, res) => {
 // 	res.send('hello');

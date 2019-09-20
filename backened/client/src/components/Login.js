@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Login = (props) => {
 	const [ mes, setMes ] = useState({ message: '', loading: '' });
-	const [ log, setLog ] = useState({ username: '', password: '' });
+	const [ log, setLog ] = useState({ email: '', password: '' });
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -13,24 +13,19 @@ const Login = (props) => {
 		axios
 			.post('/user/login', log)
 			.then((res) => {
-				sessionStorage.setItem('NewUser', JSON.stringify(res.data.user));
+				if (res.data.success) {
+					sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
+					console.log(res);
+					props.history.push('/');
+				}
 				console.log(res);
-				props.history.push({
-					pathname: '/',
-					state: {
-						roleID: res.data.id,
-						user: res.data.user,
-						message: 'welcome back! '
-					}
-				});
-				return;
 			})
 			.catch((error) => {
 				if (error && error.status === 400) {
-					setMes({ ...mes, message: 'passord or username incorrect', loading: '' });
+					setMes({ ...mes, message: error.response.err, loading: '' });
 				}
 				if (error.response) {
-					setMes({ message: 'passord or username incorrect', loading: '' });
+					setMes({ message: error.response.err, loading: '' });
 				}
 				return;
 			});
@@ -73,8 +68,8 @@ const Login = (props) => {
 					<hr />
 					<Form onSubmit={handleSubmit} className="mt-2">
 						<FormGroup>
-							<Label for="name">Name</Label>
-							<Input type="text" value={log.username} onChange={handleClick} name="username" />
+							<Label for="name">Email</Label>
+							<Input type="email" value={log.email} onChange={handleClick} name="email" />
 						</FormGroup>
 						<FormGroup>
 							<Label for="Password">Password</Label>
