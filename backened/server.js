@@ -56,13 +56,14 @@ server.use(
 server.use(passport.initialize());
 server.use(passport.session());
 
-passport.serializeUser(function(user, done) {
-	done(null, user);
-});
+// passport.serializeUser(function (user, done) {
+// 	done(null, user);
+// });
 
-passport.deserializeUser(function(user, done) {
-	done(null, user);
-});
+// passport.deserializeUser(function (user, done) {
+// 	done(null, user);
+// });
+
 //passport config
 require('./middleware/passportJson')(passport);
 require('./middleware/facebook')(passport);
@@ -135,16 +136,21 @@ server.get(
 	'/auth/google',
 	passport.authenticate('google', {
 		authType: 'reauthenticate',
+		session: false,
 		scope: [ 'openid', 'email', 'profile', 'https://www.googleapis.com/auth/plus.login' ]
 	})
 );
 
-server.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/user/login' }), function(
-	req,
-	res
-) {
-	res.redirect('/');
-});
+server.get(
+	'/auth/google/callback',
+	passport.authenticate('google', {
+		failureRedirect: '/user/login',
+		session: false
+	}),
+	function(req, res) {
+		res.redirect('/');
+	}
+);
 
 server.listen(port, (err) => {
 	if (err) throw err;
