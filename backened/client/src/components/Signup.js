@@ -93,12 +93,12 @@ function SignUp(props) {
 		setLoad({ loading: 'Loading...' });
 		//send data
 		axios
-			.post('/user', data)
+			.post('/user/register', data)
 			.then((res) => {
 				console.log(res);
 				setServer({ err: '' });
-				if (res.data.length) {
-					sessionStorage.setItem('NewUser', JSON.stringify(res.data.user));
+				if (res.data) {
+					sessionStorage.setItem('NewUser', JSON.stringify(res.data));
 					props.history.push('/user/login');
 				}
 			})
