@@ -10,13 +10,14 @@ module.exports = (passport) => {
 			{
 				clientID: process.env.GOOGLE_CLIENT_ID,
 				clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-				callbackURL: 'https://eazibusi.herokuapp.com/auth/google/callback'
+				callbackURL: 'https://eazibusi.herokuapp.com/auth/google/callback',
+				passReqToCallback: true
 			},
 			function(accessToken, refreshToken, profile, done) {
 				console.log(accessToken, profile);
 				User.findOne({ 'google.googleId': profile.id }, function(err, user) {
 					if (err) {
-						return done(err);
+						return done('unauthorized');
 					}
 					if (!user) {
 						const user = new User();
@@ -28,7 +29,7 @@ module.exports = (passport) => {
 							(user.google.avater = profile._json.picture ? profile._json.picture : '');
 						user.save(function(err) {
 							if (err) console.log(err);
-							return done(err, user);
+							return done('unauthorized', user);
 						});
 					} else {
 						//found user. Return

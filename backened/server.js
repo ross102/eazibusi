@@ -135,7 +135,6 @@ server.get(
 server.get(
 	'/auth/google',
 	passport.authenticate('google', {
-		authType: 'reauthenticate',
 		session: false,
 		scope: [ 'openid', 'email', 'profile', 'https://www.googleapis.com/auth/plus.login' ]
 	})
