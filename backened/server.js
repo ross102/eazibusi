@@ -63,8 +63,8 @@ server.use(passport.initialize());
 server.use(passport.session());
 
 // passport.use(User.createStrategy());
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 server.use(function(req, res, next) {
 	// Website you wish to allow to connect
