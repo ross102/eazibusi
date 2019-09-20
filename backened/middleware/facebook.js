@@ -10,7 +10,7 @@ module.exports = (passport) => {
 			{
 				clientID: process.env.FACEBOOK_APP_ID,
 				clientSecret: process.env.FACEBOOK_APP_SECRET,
-				callbackURL: 'http://eazibusi.herokuapp.com/auth/facebook/callback',
+				callbackURL: 'https://eazibusi.herokuapp.com/auth/facebook/callback',
 				profileFields: [ 'id', 'email', 'displayName', 'picture.type(large)' ]
 			},
 			function(accessToken, refreshToken, profile, done) {
