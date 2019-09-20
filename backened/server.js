@@ -117,6 +117,7 @@ server.get(
 	'/auth/facebook',
 	passport.authenticate('facebook', {
 		authType: 'reauthenticate',
+		session: false,
 		scope: [ 'email' ]
 	})
 );
@@ -125,6 +126,7 @@ server.get(
 	cors(),
 	passport.authenticate('facebook', {
 		failureRedirect: '/user/login',
+		session: false,
 		scope: [ 'email' ]
 	}),
 	(req, res) => {
@@ -135,6 +137,7 @@ server.get(
 server.get(
 	'/auth/google',
 	passport.authenticate('google', {
+		authType: 'reauthenticate',
 		session: false,
 		scope: [ 'openid', 'email', 'profile', 'https://www.googleapis.com/auth/plus.login' ]
 	})
