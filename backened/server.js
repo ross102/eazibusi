@@ -118,7 +118,8 @@ server.get(
 server.get(
 	'/auth/google',
 	passport.authenticate('google', {
-		scope: [ 'https://www.googleapis.com/auth/plus.login' ]
+		authType: 'reauthenticate',
+		scope: [ 'openid', 'email', 'profile', 'https://www.googleapis.com/auth/plus.login' ]
 	})
 );
 
