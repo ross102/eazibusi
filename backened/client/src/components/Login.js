@@ -16,7 +16,7 @@ const Login = (props) => {
 				if (res.data.success) {
 					sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
 					console.log(res);
-					props.history.push('/');
+					window.location.href = '/';
 				}
 				console.log(res);
 			})
@@ -35,28 +35,10 @@ const Login = (props) => {
 		setLog({ ...log, [event.target.name]: event.target.value });
 	};
 	const handleFacebook = (event) => {
-		axios
-			.get('/auth/facebook')
-			.then((res) => {
-				console.log(res);
-				return;
-			})
-			.catch((error) => {
-				console.log(error);
-				return;
-			});
+		window.location.href = 'https://eazibusi.herokuapp.com/auth/facebook';
 	};
 	const handleGoogle = (event) => {
-		axios
-			.get('/auth/google')
-			.then((res) => {
-				console.log(res);
-				return;
-			})
-			.catch((error) => {
-				console.log(error);
-				return;
-			});
+		window.location.href = 'https://eazibusi.herokuapp.com/auth/google';
 	};
 	return (
 		<div className="container mt-5 text-center">
