@@ -54,17 +54,26 @@ server.use(
 );
 //passport middleware
 server.use(passport.initialize());
+server.use(passport.session());
+
+passport.serializeUser(function(user, done) {
+	done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+	done(null, user);
+});
 //passport config
 require('./middleware/passportJson')(passport);
 require('./middleware/facebook')(passport);
 require('./middleware/google')(passport);
 
-server.use(passport.initialize());
-server.use(passport.session());
+// server.use(passport.initialize());
+// server.use(passport.session());
 
 // passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
 server.use(function(req, res, next) {
 	// Website you wish to allow to connect
