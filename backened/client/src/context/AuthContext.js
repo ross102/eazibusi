@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
 
 export const AuthContext = createContext();
-const signedIn = JSON.parse(sessionStorage.getItem('userToken')) || null;
+let signedIn = JSON.parse(sessionStorage.getItem('userToken'));
 
 console.log(signedIn);
 function AuthProvider(props) {

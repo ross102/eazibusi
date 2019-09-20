@@ -7,7 +7,7 @@ import Login from './Login';
 import { AuthContext } from '../context/AuthContext';
 
 function NavLayout() {
-	const { signedIn } = useContext(AuthContext);
+	let { signedIn } = useContext(AuthContext);
 	// const [ person, setPerson ] = useState({ newUser: '', loggedIn: false });
 	// let mount = false;
 	// const setUser = () => {

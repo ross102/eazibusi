@@ -99,7 +99,7 @@ function SignUp(props) {
 				setServer({ err: '' });
 				if (res.data) {
 					sessionStorage.setItem('NewUser', JSON.stringify(res.data));
-					props.history.push('/user/login');
+					props.history.push('/login');
 				}
 			})
 			.catch((erro) => {

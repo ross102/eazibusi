@@ -7,7 +7,7 @@ import SecondSection from './SecondSection';
 import ThirdSection from './ThirdSection';
 
 const Home = (props) => {
-	const { signedIn } = useContext(AuthContext);
+	let { signedIn } = useContext(AuthContext);
 	console.log(signedIn);
 	const [ message, setMessage ] = useState({ message: '' });
 
