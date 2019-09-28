@@ -100,18 +100,18 @@ router.post('/login', (req, res) => {
 							// console.log(token);
 							// token = encodeURIComponent(token);
 							// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user= ' + user.username);
-							// return res.json({
-							// 	success: true,
-							// 	token: {
-							// 		token: 'Bearer ' + token,
-							// 		user: user
-							// 	}
-							// });
-							user.accessToken = token;
-							user.save((err) => {
-								if (err) throw err;
+							return res.json({
+								success: true,
+								token: {
+									token: 'Bearer ' + token,
+									user: user
+								}
 							});
-							res.redirect('/');
+							// user.accessToken = token;
+							// user.save((err) => {
+							// 	if (err) throw err;
+							// });
+							// res.redirect('/');
 						}
 					);
 				} else {
@@ -125,8 +125,10 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/verify', (req, res) => {
-	if (req.user) res.redirect('/dashboard');
-	res.redirect('/login');
+	if (req.user) {
+		return res.status(200).json(req.user);
+	}
+	return res.status(400).json('no such user');
 });
 
 module.exports = router;

@@ -31,7 +31,13 @@ const Home = (props) => {
 		axios
 			.get('/user/verify', { withCredentials: true })
 			.then((res) => {
-				console.log(res);
+				if (res.status == 200) {
+					props.history.push('/dashboard');
+				}
+
+				{
+					props.history.push('/login');
+				}
 			})
 			.catch((err) => {
 				console.log(err.response);
