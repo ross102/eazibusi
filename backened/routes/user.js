@@ -125,8 +125,8 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/verify', (req, res) => {
-	if (req.user) return res.send('hello');
-	res.send('bad request: no user');
+	if (req.user) res.redirect('/dashboard');
+	res.redirect('/login');
 });
 
 module.exports = router;
