@@ -13,12 +13,11 @@ const Login = (props) => {
 		axios
 			.post('/user/login', log)
 			.then((res) => {
-				if (res.data.success) {
-					sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
-					console.log(res);
-					window.location.href = '/';
-				}
-				console.log(res);
+				// if (res.data.success) {
+				// 	sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
+				// 	console.log(res);
+				// 	props.history.push('/dashboard');
+				// }
 			})
 			.catch((error) => {
 				if (error && error.status === 400) {

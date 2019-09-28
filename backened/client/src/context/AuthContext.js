@@ -1,10 +1,9 @@
 import React, { useState, useEffect, createContext } from 'react';
 
 export const AuthContext = createContext();
-let signedIn = JSON.parse(sessionStorage.getItem('userToken'));
 
-console.log(signedIn);
 function AuthProvider(props) {
+	let signedIn = JSON.parse(sessionStorage.getItem('userToken'));
 	return (
 		<div>
 			<AuthContext.Provider value={{ signedIn }}>{props.children}</AuthContext.Provider>

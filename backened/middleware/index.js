@@ -6,8 +6,6 @@ module.exports = {
 		if (req.isAuthenticated()) {
 			return next();
 		}
-		res.status(400).json({
-			msg: 'please log in'
-		});
+		res.redirect('/login');
 	}
 };

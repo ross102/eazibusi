@@ -18,6 +18,7 @@ const UserSchema = new Schema({
 		type: Boolean,
 		trim: true
 	},
+	accessToken: String,
 	facebook: {
 		facebookId: String,
 		email: String,

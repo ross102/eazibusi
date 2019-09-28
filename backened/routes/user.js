@@ -10,6 +10,7 @@ const { isLoggedin } = require('../middleware');
 
 router.get('/success', isLoggedin, (req, res) => {
 	res.send('hello world');
+	console.log('user :' + req.user);
 });
 
 // POST register route
@@ -96,17 +97,25 @@ router.post('/login', (req, res) => {
 							expiresIn: 31556926
 						},
 						(err, token) => {
-							return res.json({
-								success: true,
-								token: {
-									token: 'Bearer ' + token,
-									user: user.username
-								}
+							// console.log(token);
+							// token = encodeURIComponent(token);
+							// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user= ' + user.username);
+							// return res.json({
+							// 	success: true,
+							// 	token: {
+							// 		token: 'Bearer ' + token,
+							// 		user: user
+							// 	}
+							// });
+							user.accessToken = token;
+							user.save((err) => {
+								if (err) throw err;
 							});
+							res.redirect('/');
 						}
 					);
 				} else {
-					return res.status(400).json({ err: 'password incorect' });
+					return res.status(400).json({ err: 'password incorrect' });
 				}
 			});
 		})
@@ -115,8 +124,9 @@ router.post('/login', (req, res) => {
 		});
 });
 
-router.get('/fbk', (req, res) => {
-	res.redirect('/auth/facebook');
+router.get('/verify', (req, res) => {
+	if (req.user) return res.send('hello');
+	res.send('bad request: no user');
 });
 
 module.exports = router;

@@ -7,32 +7,42 @@ import SecondSection from './SecondSection';
 import ThirdSection from './ThirdSection';
 
 const Home = (props) => {
-	let { signedIn } = useContext(AuthContext);
-	console.log(signedIn);
-	const [ message, setMessage ] = useState({ message: '' });
+	// let { signedIn } = useContext(AuthContext);
+	// console.log(signedIn);
 
-	function check() {
-		setMessage({ message: 'welcome to eazibusi' });
-		// msg timeout
-		setTimeout(function() {
-			setMessage({ message: '' });
-		}, 6000);
-	}
+	// function check() {
+	// 	setMessage({ message: 'welcome to eazibusi' });
+	// 	// msg timeout
+	// 	setTimeout(function() {
+	// 		setMessage({ message: '' });
+	// 	}, 6000);
+	// }
 
-	useEffect(
-		() => {
-			if (signedIn !== null) {
-				check();
-			}
-		},
-		[ signedIn ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		if (signedIn !== null) {
+	// 			check();
+	// 		}
+	// 	},
+	// 	[ signedIn ]
+	// );
+
+	useEffect(() => {
+		axios
+			.get('/user/verify', { withCredentials: true })
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => {
+				console.log(err.response);
+			});
+	}, []);
 
 	return (
 		<div>
-			<h4 id="msg" style={{ marginBottom: '0', color: 'green' }}>
+			{/* <h4 id="msg" style={{ marginBottom: '0', color: 'green' }}>
 				{message.message && message.message}
-			</h4>
+			</h4> */}
 			<Jumbohouse />
 			<FirstSection />
 			<SecondSection />

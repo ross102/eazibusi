@@ -2,33 +2,34 @@ import { useState, useEffect, useContext } from 'react';
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import SignUp from './Signup';
+import Dashboard from './Dashboard';
 import Home from './Home';
 import Login from './Login';
 import { AuthContext } from '../context/AuthContext';
 
 function NavLayout() {
 	let { signedIn } = useContext(AuthContext);
-	// const [ person, setPerson ] = useState({ newUser: '', loggedIn: false });
-	// let mount = false;
-	// const setUser = () => {
-	// 	if (signedIn !== null) {
-	// 		setPerson({
-	// 			newUser: signedIn,
-	// 			loggedIn: true
-	// 		});
-	// 	}
-	// 	return;
-	// };
+	const [ person, setPerson ] = useState({ newUser: '', loggedIn: false });
+	let mount = false;
+	const setUser = () => {
+		if (signedIn !== null) {
+			setPerson({
+				newUser: signedIn,
+				loggedIn: true
+			});
+		}
+		return;
+	};
 
-	// useEffect(() => {
-	// 	mount = true;
-	// 	if (mount) {
-	// 		setUser();
-	// 	}
-	// 	return () => {
-	// 		mount = false;
-	// 	};
-	// }, []);
+	useEffect(() => {
+		mount = true;
+		if (mount) {
+			setUser();
+		}
+		return () => {
+			mount = false;
+		};
+	}, []);
 
 	return (
 		<Router>
@@ -114,6 +115,7 @@ function NavLayout() {
 			{/* <Route path="/about/" component={About} /> */}
 			<Route path="/register" component={SignUp} />
 			<Route path="/login" component={Login} />
+			<Route path="/dashboard" component={Dashboard} />
 		</Router>
 	);
 }

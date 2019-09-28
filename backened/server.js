@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const User = require('./models/userModel');
 const Seller = require('./models/sellerModel');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
@@ -40,6 +41,9 @@ const server = express();
 server.use(cors());
 server.use('*', cors());
 
+//cookies
+server.use(cookieParser());
+
 // express body-parser
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
@@ -56,13 +60,13 @@ server.use(
 server.use(passport.initialize());
 server.use(passport.session());
 
-// passport.serializeUser(function (user, done) {
-// 	done(null, user);
-// });
+passport.serializeUser(function(user, done) {
+	done(null, user);
+});
 
-// passport.deserializeUser(function (user, done) {
-// 	done(null, user);
-// });
+passport.deserializeUser(function(user, done) {
+	done(null, user);
+});
 
 //passport config
 require('./middleware/passportJson')(passport);
@@ -77,6 +81,7 @@ require('./middleware/google')(passport);
 // passport.deserializeUser(User.deserializeUser());
 
 server.use(function(req, res, next) {
+	res.header('Access-Control-Allow-Credentials', true);
 	// Website you wish to allow to connect
 	res.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -100,9 +105,10 @@ if (process.env.NODE_ENV === 'production') {
 		else next(); /* Continue to other routes if we're not redirecting */
 	});
 	server.use('/', express.static(path.join(__dirname, 'client/build')));
-	// server.get('*', (req, res) => {
-	// 	res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-	// });
+	server.use('/user', userRoute);
+	server.get('*', (req, res) => {
+		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+	});
 }
 
 // server.get('/', (req, res) => {
@@ -117,7 +123,6 @@ server.get(
 	'/auth/facebook',
 	passport.authenticate('facebook', {
 		authType: 'reauthenticate',
-		session: false,
 		scope: [ 'email' ]
 	})
 );
@@ -126,18 +131,22 @@ server.get(
 	cors(),
 	passport.authenticate('facebook', {
 		failureRedirect: '/user/login',
-		session: false,
 		scope: [ 'email' ]
 	}),
 	(req, res) => {
-		res.send('auth successful');
+		// let token = req.user.facebook.accessToken;
+		// let user = req.user.facebook.username;
+		// token = encodeURIComponent(token);
+		// console.log(token);
+		// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user= ' + user);
+		// res.redirect('/?name=' + user);
+		res.redirect('/');
 	}
 );
 // google routes
 server.get(
 	'/auth/google',
 	passport.authenticate('google', {
-		session: false,
 		scope: [ 'openid', 'email', 'profile', 'https://www.googleapis.com/auth/plus.login' ],
 		prompt: 'select_account'
 	})
@@ -146,10 +155,15 @@ server.get(
 server.get(
 	'/auth/google/callback',
 	passport.authenticate('google', {
-		failureRedirect: '/user/login',
-		session: false
+		failureRedirect: '/user/login'
 	}),
 	function(req, res) {
+		// let token = req.user.google.accessToken;
+		// let user = req.user.google.username;
+		// token = encodeURIComponent(token);
+		// console.log(token);
+		// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user=' + user);
+		// res.redirect('/?name=' + user);
 		res.redirect('/');
 	}
 );
