@@ -12,6 +12,7 @@ const port = process.env.PORT || 5000;
 
 // routes
 const userRoute = require('./routes/user');
+const authRoute = require('./routes/auth');
 
 // connect to the database
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Eazibusi105', {
@@ -104,13 +105,13 @@ if (process.env.NODE_ENV === 'production') {
 		if (req.headers['x-forwarded-proto'] != 'https') res.redirect('https://eazibusi.herokuapp.com' + req.url);
 		else next(); /* Continue to other routes if we're not redirecting */
 	});
+	// mount route
+	server.use('/', express.static(path.join(__dirname, 'client/build')));
 	server.use('/user', userRoute);
-
-	server.use('*', express.static(path.join(__dirname, 'client/build')));
-
-	// server.get('/*', (req, res) => {
-	// 	res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-	// });
+	server.use('/auth', authRoute);
+	server.get('*', (req, res) => {
+		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+	});
 }
 
 // server.get('/', (req, res) => {
@@ -119,56 +120,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Mount routes
 server.use('/user', userRoute);
-
-// facebook login
-server.get(
-	'/auth/facebook',
-	passport.authenticate('facebook', {
-		authType: 'reauthenticate',
-		scope: [ 'email' ]
-	})
-);
-server.get(
-	'/auth/facebook/callback',
-	cors(),
-	passport.authenticate('facebook', {
-		failureRedirect: '/user/login',
-		scope: [ 'email' ]
-	}),
-	(req, res) => {
-		// let token = req.user.facebook.accessToken;
-		// let user = req.user.facebook.username;
-		// token = encodeURIComponent(token);
-		// console.log(token);
-		// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user= ' + user);
-		// res.redirect('/?name=' + user);
-		res.redirect('/');
-	}
-);
-// google routes
-server.get(
-	'/auth/google',
-	passport.authenticate('google', {
-		scope: [ 'openid', 'email', 'profile', 'https://www.googleapis.com/auth/plus.login' ],
-		prompt: 'select_account'
-	})
-);
-
-server.get(
-	'/auth/google/callback',
-	passport.authenticate('google', {
-		failureRedirect: '/user/login'
-	}),
-	function(req, res) {
-		// let token = req.user.google.accessToken;
-		// let user = req.user.google.username;
-		// token = encodeURIComponent(token);
-		// console.log(token);
-		// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user=' + user);
-		// res.redirect('/?name=' + user);
-		res.redirect('/');
-	}
-);
+server.use('/auth', authRoute);
 
 server.listen(port, (err) => {
 	if (err) throw err;
