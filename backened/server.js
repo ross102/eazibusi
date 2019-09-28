@@ -105,7 +105,7 @@ if (process.env.NODE_ENV === 'production') {
 		else next(); /* Continue to other routes if we're not redirecting */
 	});
 	server.use('/', express.static(path.join(__dirname, 'client/build')));
-	server.use('/user', userRoute);
+	// server.use('/user', userRoute);
 	server.get('*', (req, res) => {
 		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 	});
