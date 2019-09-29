@@ -30,9 +30,9 @@ const Home = (props) => {
 
 	useEffect(() => {
 		let query = queryString.parse(props.location.search);
-		if (query.name) {
-			window.sessionStorage.setItem('loggedUser', query.name);
-			props.history.push('/');
+		if (query.token) {
+			console.log('usertoken ' + query.token);
+			window.sessionStorage.setItem('userToken', query.token);
 		}
 	}, []);
 
