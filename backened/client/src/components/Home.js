@@ -30,11 +30,12 @@ const Home = (props) => {
 	// );
 
 	useEffect(() => {
-		window.location.reload();
 		let query = queryString.parse(props.location.search);
 		if (query.token) {
 			window.sessionStorage.setItem('userToken', JSON.stringify(query.token));
 			props.history.push('/');
+			window.location.reload();
+		} else {
 			window.location.reload();
 		}
 	}, []);
