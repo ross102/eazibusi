@@ -19,12 +19,12 @@ router.get(
 	}),
 	(req, res) => {
 		// let token = req.user.facebook.accessToken;
-		// let user = req.user.facebook.username;
+		// if(req.user)
+		let user = req.user.facebook.username;
 		// token = encodeURIComponent(token);
 		// console.log(token);
 		// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user= ' + user);
-		// res.redirect('/?name=' + user);
-		res.redirect('/');
+		res.redirect('/?name=' + user);
 	}
 );
 // google routes
@@ -43,12 +43,12 @@ router.get(
 	}),
 	function(req, res) {
 		// let token = req.user.google.accessToken;
-		// let user = req.user.google.username;
+		let user = req.user.google.username;
 		// token = encodeURIComponent(token);
 		// console.log(token);
 		// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user=' + user);
-		// res.redirect('/?name=' + user);
-		res.redirect('/');
+		res.redirect('/?name=' + user);
+		// res.redirect('/');
 	}
 );
 

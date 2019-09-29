@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import Jumbohouse from './Jumbohouse';
 import FirstSection from './firstSection';
 import axios from 'axios';
+import queryString from 'query-string';
 import SecondSection from './SecondSection';
 import ThirdSection from './ThirdSection';
 
@@ -28,20 +29,11 @@ const Home = (props) => {
 	// );
 
 	useEffect(() => {
-		axios
-			.get('/user/verify', { withCredentials: true })
-			.then((res) => {
-				if (res.status == 200) {
-					props.history.push('/dashboard');
-				}
-
-				{
-					props.history.push('/login');
-				}
-			})
-			.catch((err) => {
-				console.log(err.response);
-			});
+		let query = queryString.parse(props.location.search);
+		if (query.name) {
+			window.sessionStorage.setItem('loggedUser', query.name);
+			props.history.push('/');
+		}
 	}, []);
 
 	return (
