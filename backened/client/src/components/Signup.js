@@ -98,7 +98,7 @@ function SignUp(props) {
 				console.log(res);
 				setServer({ err: '' });
 				if (res.data) {
-					sessionStorage.setItem('NewUser', JSON.stringify(res.data));
+					// sessionStorage.setItem('NewUser', JSON.stringify(res.data));
 					props.history.push('/login');
 				}
 			})

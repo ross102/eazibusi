@@ -14,8 +14,7 @@ const Login = (props) => {
 			.post('/user/login', log)
 			.then((res) => {
 				if (res.data.success) {
-					sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
-					console.log(res);
+					window.sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
 					props.history.push('/');
 				}
 			})

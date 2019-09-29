@@ -84,7 +84,7 @@ function NavLayout() {
 						)}
 						{signedIn !== null && (
 							<li className="nav-item active">
-								<Link to="#" className="nav-link">
+								<Link to="/dashboard" className="nav-link">
 									<i className="fa fa-user fa-lg" /> Dashboard
 								</Link>
 							</li>

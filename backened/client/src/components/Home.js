@@ -34,8 +34,8 @@ const Home = (props) => {
 		if (query.token) {
 			window.sessionStorage.setItem('userToken', JSON.stringify(query.token));
 			props.history.push('/');
-			window.location.reload();
 		}
+		window.location.reload();
 	}, []);
 
 	return (

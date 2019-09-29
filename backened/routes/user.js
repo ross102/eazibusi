@@ -100,17 +100,17 @@ router.post('/login', (req, res) => {
 							// console.log(token);
 							// token = encodeURIComponent(token);
 							// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user= ' + user.username);
+							user.accessToken = token;
+							user.save((err) => {
+								if (err) throw err;
+							});
 							return res.json({
 								success: true,
 								token: {
-									token: 'Bearer ' + token,
-									user: user
+									token: 'Bearer ' + token
 								}
 							});
-							// user.accessToken = token;
-							// user.save((err) => {
-							// 	if (err) throw err;
-							// });
+
 							// res.redirect('/');
 						}
 					);

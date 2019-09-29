@@ -3,30 +3,28 @@ import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 
 const Dashboard = (props) => {
-	// let { signedIn } = useContext(AuthContext);
-	// console.log(signedIn);
-	// const [ message, setMessage ] = useState({ message: '' });
+	let { signedIn } = useContext(AuthContext);
+	const [ message, setMessage ] = useState({ message: '' });
 
-	// function check() {
-	// 	location.reload();
-	// 	setMessage({ message: 'welcome to eazibusi' });
-	// 	// msg timeout
-	// 	setTimeout(function() {
-	// 		setMessage({ message: '' });
-	// 	}, 6000);
-	// }
+	function check() {
+		setMessage({ message: 'welcome to eazibusi' });
+		// msg timeout
+		setTimeout(function() {
+			setMessage({ message: '' });
+		}, 6000);
+	}
 
-	// useEffect(() => {
-	// 	check();
-	// }, []);
+	useEffect(() => {
+		check();
+	}, []);
 
 	return (
 		<div>
-			{/* <h4 id="msg" style={{ marginBottom: '0', color: 'green' }}>
+			<h6 id="msg" style={{ marginBottom: '0', color: 'green' }}>
 				{message.message && message.message}
-			</h4> */}
+			</h6>
 
-			<h4> Hello </h4>
+			<h4> This is your Dashboard ! </h4>
 		</div>
 	);
 };
