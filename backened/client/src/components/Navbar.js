@@ -21,15 +21,18 @@ function NavLayout() {
 		return;
 	};
 
-	useEffect(() => {
-		mount = true;
-		if (mount) {
-			setUser();
-		}
-		return () => {
-			mount = false;
-		};
-	}, []);
+	useEffect(
+		() => {
+			mount = true;
+			if (mount) {
+				setUser();
+			}
+			return () => {
+				mount = false;
+			};
+		},
+		[ signedIn ]
+	);
 
 	return (
 		<Router>
