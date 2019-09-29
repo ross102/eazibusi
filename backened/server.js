@@ -109,7 +109,7 @@ if (process.env.NODE_ENV === 'production') {
 	server.use('/', express.static(path.join(__dirname, 'client/build')));
 	server.use('/user', userRoute);
 	server.use('/auth', authRoute);
-	server.get('/*', (req, res) => {
+	server.get('*', (req, res) => {
 		res.sendFile(
 			path.join(__dirname, 'client', 'build', 'index.html', function(err) {
 				res.status(404).send(err);
