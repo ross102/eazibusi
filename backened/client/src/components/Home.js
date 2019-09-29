@@ -9,7 +9,7 @@ import SecondSection from './SecondSection';
 import ThirdSection from './ThirdSection';
 
 const Home = (props) => {
-	// let { signedIn } = useContext(AuthContext);
+	let { signedIn } = useContext(AuthContext);
 	// console.log(signedIn);
 
 	// function check() {
@@ -34,8 +34,11 @@ const Home = (props) => {
 		if (query.token) {
 			window.sessionStorage.setItem('userToken', JSON.stringify(query.token));
 			props.history.push('/');
+			window.location.reload();
 		}
-		window.location.reload();
+		if (signedIn) {
+			window.location.reload();
+		}
 	}, []);
 
 	return (
