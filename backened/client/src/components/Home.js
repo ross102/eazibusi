@@ -29,17 +29,20 @@ const Home = (props) => {
 	// 	[ signedIn ]
 	// );
 
-	useEffect(() => {
-		let query = queryString.parse(props.location.search);
-		if (query.token) {
-			window.sessionStorage.setItem('userToken', JSON.stringify(query.token));
-			props.history.push('/');
-			window.location.reload();
-		}
-		if (signedIn) {
-			window.location.reload();
-		}
-	}, []);
+	useEffect(
+		() => {
+			let query = queryString.parse(props.location.search);
+			if (query.token) {
+				window.sessionStorage.setItem('userToken', JSON.stringify(query.token));
+				props.history.push('/');
+				window.location.reload();
+			}
+			if (signedIn != null) {
+				window.location.reload();
+			}
+		},
+		[ query, signedIn ]
+	);
 
 	return (
 		<div>
