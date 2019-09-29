@@ -29,19 +29,19 @@ const Home = (props) => {
 	// 	[ signedIn ]
 	// );
 
-	useEffect(
-		() => {
-			let query = queryString.parse(props.location.search);
-			if (query.token) {
-				window.sessionStorage.setItem('userToken', JSON.stringify(query.token));
-				props.history.push('/');
+	useEffect(() => {
+		let query = queryString.parse(props.location.search);
+		if (query.token) {
+			window.sessionStorage.setItem('userToken', JSON.stringify(query.token));
+			props.history.push('/');
+			window.location.reload();
+		}
+		if (signedIn) {
+			setTimeout(() => {
 				window.location.reload();
-			} else {
-				window.location.reload();
-			}
-		},
-		[ signedIn ]
-	);
+			}, 2000);
+		}
+	});
 
 	return (
 		<div>
