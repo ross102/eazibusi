@@ -15,7 +15,6 @@ const Login = (props) => {
 			.then((res) => {
 				if (res.data.success) {
 					window.sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
-					window.location.reload();
 					props.history.push('/');
 				}
 			})
