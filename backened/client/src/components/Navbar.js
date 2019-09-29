@@ -9,12 +9,11 @@ import { AuthContext } from '../context/AuthContext';
 
 function NavLayout() {
 	let { signedIn } = useContext(AuthContext);
-	const [ person, setPerson ] = useState({ newUser: '', loggedIn: false });
+	const [ person, setPerson ] = useState({ loggedIn: false });
 	let mount = false;
 	const setUser = () => {
 		if (signedIn !== null) {
 			setPerson({
-				newUser: signedIn,
 				loggedIn: true
 			});
 		}
@@ -79,14 +78,14 @@ function NavLayout() {
 						{signedIn !== null && (
 							<li className="nav-item active">
 								<Link to="#" className="nav-link">
-									Logged in as {signedIn.user}
+									<i className="fa fa-user fa-lg" /> Logged in
 								</Link>
 							</li>
 						)}
 						{signedIn !== null && (
 							<li className="nav-item active">
 								<Link to="#" className="nav-link">
-									Dashboard
+									<i className="fa fa-user fa-lg" /> Dashboard
 								</Link>
 							</li>
 						)}
