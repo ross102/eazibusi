@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import Jumbohouse from './Jumbohouse';
 import FirstSection from './firstSection';
@@ -31,7 +32,7 @@ const Home = (props) => {
 	useEffect(() => {
 		let query = queryString.parse(props.location.search);
 		if (query.token) {
-			window.sessionStorage.setItem('userToken', query.token);
+			window.sessionStorage.setItem('userToken', JSON.stringify(query.token));
 			props.history.push('/');
 		}
 	}, []);
