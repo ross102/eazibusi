@@ -15,16 +15,17 @@ router.get(
 	'/facebook/callback',
 	passport.authenticate('facebook', {
 		failureRedirect: '/user/login',
+		session: false,
 		scope: [ 'email' ]
 	}),
 	(req, res) => {
-		let token = String(req.user.facebook.accessToken);
+		let token = req.user.facebook.accessToken;
 		// if(req.user)
 		// let user = req.user.facebook.username;
 		// token = encodeURIComponent(token);
 		// console.log(token);
 		// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user= ' + user);
-		res.redirect('/?token= ' + token);
+		res.redirect('https://eazibusi.herokuapp.com?token=' + token);
 	}
 );
 // google routes
@@ -39,15 +40,16 @@ router.get(
 router.get(
 	'/google/callback',
 	passport.authenticate('google', {
-		failureRedirect: '/user/login'
+		failureRedirect: '/user/login',
+		session: false
 	}),
 	function(req, res) {
-		let token = String(req.user.google.accessToken);
+		let token = req.user.google.accessToken;
 		// let user = req.user.google.username;
 		// token = encodeURIComponent(token);
 		// console.log(token);
 		// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user=' + user);
-		res.redirect('/?token= ' + token);
+		res.redirect('https://eazibusi.herokuapp.com?token= ' + token);
 		// res.redirect('/');
 	}
 );
