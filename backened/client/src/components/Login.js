@@ -15,8 +15,11 @@ const Login = (props) => {
 			.post('/user/login', log)
 			.then((res) => {
 				if (res.data.success) {
-					window.sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
-					return <Redirect to="/" />;
+					// window.sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
+					props.history.push({
+						pathname: '/',
+						search: '?token=' + res.data.token
+					});
 				}
 			})
 			.catch((error) => {
