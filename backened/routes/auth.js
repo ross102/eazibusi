@@ -15,7 +15,6 @@ router.get(
 	'/facebook/callback',
 	passport.authenticate('facebook', {
 		failureRedirect: '/user/login',
-		session: false,
 		scope: [ 'email' ]
 	}),
 	(req, res) => {
@@ -40,8 +39,7 @@ router.get(
 router.get(
 	'/google/callback',
 	passport.authenticate('google', {
-		failureRedirect: '/user/login',
-		session: false
+		failureRedirect: '/user/login'
 	}),
 	function(req, res) {
 		let token = req.user.google.accessToken;
