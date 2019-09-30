@@ -14,28 +14,23 @@ module.exports = (passport) => {
 				profileFields: [ 'id', 'email', 'displayName', 'picture.type(large)' ]
 			},
 			function(accessToken, refreshToken, profile, done) {
-				console.log(accessToken, profile);
-				User.findOne({ 'facebook.facebookId': profile.id }, function(err, user) {
-					if (err) {
-						return done('unauthorised');
-					}
-					if (!user) {
-						const user = new User();
-						(user.facebook.email = profile.emails[0].value ? profile.emails[0].value : ''),
-							(user.facebook.username = profile.displayName),
-							(user.facebook.accessToken = accessToken),
-							(user.facebook.provider = 'facebook'),
-							(user.facebook.facebookId = profile.id),
-							(user.facebook.avater = profile.photos ? profile.photos[0].value : '');
+				// console.log(accessToken, profile);
+				// User.findOne({ 'facebook.facebookId': profile.id }, function(err, user) {
+				// 	if (err) {
+				// 		return done('unauthorised');
+				// 	}
+				// 	if (!user) {
+				let user = req.user;
+				user.facebook.email = profile.emails[0].value ? profile.emails[0].value : '';
+				user.facebook.username = profile.displayName;
+				user.facebook.accessToken = accessToken;
+				user.facebook.provider = 'facebook';
+				user.facebook.facebookId = profile.id;
+				user.facebook.avater = profile.photos ? profile.photos[0].value : '';
 
-						user.save(function(err) {
-							if (err) console.log(err);
-							return done('unauthorised', user);
-						});
-					} else {
-						//found user. Return
-						return done(null, user);
-					}
+				user.save(function(err) {
+					if (err) throw err;
+					return done(null, user);
 				});
 			}
 		)

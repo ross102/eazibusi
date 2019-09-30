@@ -10,32 +10,31 @@ module.exports = (passport) => {
 			{
 				clientID: process.env.GOOGLE_CLIENT_ID,
 				clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-				callbackURL: 'https://eazibusi.herokuapp.com/auth/google/callback',
-				passReqToCallback: true
+				callbackURL: 'https://eazibusi.herokuapp.com/auth/google/callback'
 			},
 			function(accessToken, refreshToken, profile, done) {
-				console.log(accessToken, profile);
-				User.findOne({ 'google.googleId': profile.id }, function(err, user) {
-					if (err) {
-						return done('unauthorized');
-					}
-					if (!user) {
-						const user = new User();
-						(user.google.email = profile.emails[0].value ? profile.emails[0].value : ''),
-							(user.google.username = profile.displayName),
-							(user.google.accessToken = accessToken),
-							(user.google.provider = 'google'),
-							(user.google.googleId = profile.id),
-							(user.google.avater = profile._json.picture ? profile._json.picture : '');
-						user.save(function(err) {
-							if (err) console.log(err);
-							return done('unauthorized', user);
-						});
-					} else {
-						//found user. Return
-						return done(null, user);
-					}
+				// console.log(accessToken, profile);
+				// User.findOne({ 'google.googleId': profile.id }, function(err, user) {
+				// 	if (err) {
+				// 		return done('unauthorized');
+				// 	}
+				// if (!user) {
+				let user = req.user;
+				user.google.email = profile.emails[0].value ? profile.emails[0].value : '';
+				user.google.username = profile.displayName;
+				user.google.accessToken = accessToken;
+				user.google.provider = 'google';
+				user.google.googleId = profile.id;
+				user.google.avater = profile._json.picture ? profile._json.picture : '';
+				user.save(function(err) {
+					if (err) throw err;
+					return done(null, user);
 				});
+				// 	} else {
+				// 		//found user. Return
+				// 		return done(null, user);
+				// 	}
+				// });
 			}
 		)
 	);
