@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import FirstSection from './firstSection';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = (props) => {
@@ -15,7 +16,7 @@ const Login = (props) => {
 			.then((res) => {
 				if (res.data.success) {
 					window.sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
-					props.history.push('/');
+					return <Redirect to="/" />;
 				}
 			})
 			.catch((error) => {
