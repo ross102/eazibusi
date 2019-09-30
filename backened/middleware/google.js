@@ -22,7 +22,7 @@ module.exports = (passport) => {
 						const user = new User();
 						(user.google.email = profile.emails[0].value ? profile.emails[0].value : ''),
 							(user.google.username = profile.displayName),
-							(user.google.accessToken = String(accessToken)),
+							(user.google.accessToken = accessToken),
 							(user.google.provider = 'google'),
 							(user.google.googleId = profile.id),
 							(user.google.avater = profile._json.picture ? profile._json.picture : '');

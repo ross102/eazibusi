@@ -23,7 +23,7 @@ module.exports = (passport) => {
 						const user = new User();
 						(user.facebook.email = profile.emails[0].value ? profile.emails[0].value : ''),
 							(user.facebook.username = profile.displayName),
-							(user.facebook.accessToken = String(accessToken)),
+							(user.facebook.accessToken = accessToken),
 							(user.facebook.provider = 'facebook'),
 							(user.facebook.facebookId = profile.id),
 							(user.facebook.avater = profile.photos ? profile.photos[0].value : '');

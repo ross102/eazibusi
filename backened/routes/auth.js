@@ -18,7 +18,7 @@ router.get(
 		scope: [ 'email' ]
 	}),
 	(req, res) => {
-		let token = req.user.facebook.accessToken;
+		let token = String(req.user.facebook.accessToken);
 		// if(req.user)
 		// let user = req.user.facebook.username;
 		// token = encodeURIComponent(token);
@@ -42,7 +42,7 @@ router.get(
 		failureRedirect: '/user/login'
 	}),
 	function(req, res) {
-		let token = req.user.google.accessToken;
+		let token = String(req.user.google.accessToken);
 		// let user = req.user.google.username;
 		// token = encodeURIComponent(token);
 		// console.log(token);
