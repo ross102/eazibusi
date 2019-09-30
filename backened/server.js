@@ -54,7 +54,7 @@ server.use(
 	session({
 		secret: 'lions are friendly',
 		resave: false,
-		saveUninitialized: true
+		saveUninitialized: false
 	})
 );
 //passport middleware
@@ -110,11 +110,7 @@ if (process.env.NODE_ENV === 'production') {
 	server.use('/user', userRoute);
 	server.use('/auth', authRoute);
 	server.get('*', (req, res) => {
-		res.sendFile(
-			path.join(__dirname, 'client', 'build', 'index.html', function(err) {
-				res.status(404).send(err);
-			})
-		);
+		res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 	});
 }
 
