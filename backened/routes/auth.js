@@ -25,7 +25,7 @@ router.get(
 		// token = encodeURIComponent(token);
 		// console.log(token);
 		// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user= ' + user);
-		res.redirect('/');
+		res.redirect('/login');
 	}
 );
 // google routes
@@ -49,7 +49,7 @@ router.get(
 		// token = encodeURIComponent(token);
 		// console.log(token);
 		// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user=' + user);
-		res.redirect('/');
+		res.redirect('/login');
 		// res.redirect('/');
 	}
 );
