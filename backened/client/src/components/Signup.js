@@ -159,9 +159,9 @@ function SignUp(props) {
 								className="formpass"
 							/>
 							<p className="text-danger">{pErr.password && pErr.password}</p>
-							<button onClick={handleToggle} className="showpass">
+							<a onClick={handleToggle} className="showpass">
 								<i className=" fa fa-eye fa-lg" aria-hidden="true" />
-							</button>
+							</a>
 						</FormGroup>
 						<FormGroup tag="fieldset">
 							<FormGroup>

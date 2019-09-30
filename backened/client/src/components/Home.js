@@ -36,12 +36,13 @@ const Home = (props) => {
 			props.history.push('/');
 			window.location.reload();
 		}
-		if (signedIn) {
-			setTimeout(() => {
-				window.location.reload();
-			}, 2000);
-		}
-	});
+		// if (signedIn) {
+		// 	setTimeout(() => {
+		// 		window.location.reload();
+		// 	}, 2000);
+		// }
+		console.log(signedIn);
+	}, []);
 
 	return (
 		<div>
