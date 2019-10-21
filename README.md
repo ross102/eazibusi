@@ -1,7 +1,5 @@
 # eazibusi
-<h2> Mern app </h2>
-<hr />
+<h4> Ecormmerce mern app </h4>
 <p>played with google, facebook and jwt authentication with passport.js . </p>
-<p>will keep updating new changes as the project gets bigger. </p>
+<p>still actively adding changes as it progresses. </p>
 <p> used react on the client and express framework on the server </p>
-<p> ecommerce app in it's early stages </p>
