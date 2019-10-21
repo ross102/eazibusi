@@ -15,10 +15,9 @@ const Login = (props) => {
 			.post('/user/login', log)
 			.then((res) => {
 				if (res.data.success) {
-					// window.sessionStorage.setItem('userToken', JSON.stringify(res.data.token));
+					window.localStorage.setItem('userToken', JSON.stringify(res.data.token));
 					props.history.push({
-						pathname: '/',
-						search: '?token=' + res.data.token
+						pathname: '/'
 					});
 				}
 			})

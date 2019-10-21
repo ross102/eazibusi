@@ -40,7 +40,7 @@ function NavLayout() {
 				className="navbar navbar-expand-lg navbar-dark "
 			>
 				<Link to="" className="navbar-brand">
-					{/* <img src="../images/Eazi-logo.gif" /> */} EaziBusi */}
+					{/* <img src="../images/Eazi-logo.gif" /> */} EaziBusi
 				</Link>
 				<button
 					className="navbar-toggler"

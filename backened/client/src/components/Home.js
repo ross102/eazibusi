@@ -12,13 +12,18 @@ const Home = (props) => {
 	let { signedIn } = useContext(AuthContext);
 	// console.log(signedIn);
 
-	// function check() {
-	// 	setMessage({ message: 'welcome to eazibusi' });
-	// 	// msg timeout
-	// 	setTimeout(function() {
-	// 		setMessage({ message: '' });
-	// 	}, 6000);
-	// }
+	const verify = () => {
+		axios
+			.get('/user/success', { headers: { 'x-access-token': signedIn || '' } })
+			.then((res) => {
+				if (res.data.user) {
+					window.localStorage.setItem('userInfo', JSON.stringify(res.data.user));
+				}
+			})
+			.catch((err) => {
+				throw new Error(err);
+			});
+	};
 
 	// useEffect(
 	// 	() => {
@@ -30,12 +35,14 @@ const Home = (props) => {
 	// );
 
 	useEffect(() => {
-		let query = queryString.parse(props.location.search);
-		if (query.token) {
-			window.sessionStorage.setItem('userToken', JSON.stringify(query.token));
-			props.history.push('/');
-			window.location.reload();
-		}
+		window.location.reload();
+		verify();
+		// let query = queryString.parse(props.location.search);
+		// if (query.token) {
+		// 	window.sessionStorage.setItem('userToken', JSON.stringify(query.token));
+		// 	props.history.push('/');
+		// 	window.location.reload();
+		// }
 		// if (signedIn) {
 		// 	setTimeout(() => {
 		// 		window.location.reload();

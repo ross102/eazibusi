@@ -7,10 +7,10 @@ const jwt = require('jsonwebtoken');
 const { isLoggedin } = require('../middleware');
 
 // GET register route
-
 router.get('/success', isLoggedin, (req, res) => {
-	res.send('hello world');
-	console.log('user :' + req.user);
+	res.json({
+		user: req.session
+	});
 });
 
 // POST register route
@@ -84,6 +84,9 @@ router.post('/login', (req, res) => {
 			}
 			bcrypt.compare(password, user.password).then((isMatch) => {
 				if (isMatch) {
+					//create session with redis
+					req.session.email = req.body.email;
+					req.session.username = user.username;
 					// create Jwt payload
 					const payload = {
 						id: user.id,
@@ -97,18 +100,13 @@ router.post('/login', (req, res) => {
 							expiresIn: 31556926
 						},
 						(err, token) => {
-							// console.log(token);
-							// token = encodeURIComponent(token);
-							// res.redirect('https://eazibusi.herokuapp.com?token=' + token + '&user= ' + user.username);
 							user.accessToken = String(token);
 							user.save((err) => {
 								if (err) throw err;
 							});
 							return res.json({
 								success: true,
-								token: {
-									token: 'Bearer ' + token
-								}
+								token: 'Bearer ' + token
 							});
 
 							// res.redirect('/');
@@ -124,11 +122,11 @@ router.post('/login', (req, res) => {
 		});
 });
 
-router.get('/verify', (req, res) => {
-	if (req.user) {
-		return res.status(200).json(req.user);
-	}
-	return res.status(400).json('no such user');
-});
+// router.get('/verify', (req, res) => {
+// 	if (req.user) {
+// 		return res.status(200).json(req.user);
+// 	}
+// 	return res.status(400).json('no such user');
+// });
 
 module.exports = router;

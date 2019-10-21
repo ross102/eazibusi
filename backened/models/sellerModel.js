@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const passportLocalMongoose = require('passport-local-mongoose');
 
 const sellerSchema = new Schema({
 	username: {
@@ -40,7 +39,5 @@ const sellerSchema = new Schema({
 		default: Date.now
 	}
 });
-
-sellerSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('Seller', sellerSchema);
